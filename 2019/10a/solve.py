@@ -1,3 +1,5 @@
+#!/usr/bin/env python3
+
 import math
 
 inputs= """
@@ -60,7 +62,6 @@ for ty in range(len(inputs)):
 							count += 1
 
 			if count > maximum:
-				print(tx,ty)
 				maximum = count
 
 print (maximum)
