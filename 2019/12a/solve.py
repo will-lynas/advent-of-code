@@ -1,3 +1,5 @@
+#!/usr/bin/env python2
+
 import itertools
 
 pos = [[3,-6,6],[10,7,-9],[-3,-7,9],[-8,0,4]]
@@ -19,8 +21,6 @@ for i in range(1001):
 
 		energy += pot * kin
 
-	print energy
-
 	for pair in list(itertools.combinations(range(len(pos)), 2)):
 		p1,p2 = pair
 
@@ -35,3 +35,6 @@ for i in range(1001):
 	for j in range(len(pos)):
 		for k in range(3):
 			pos[j][k] += vel[j][k]
+
+
+print energy
