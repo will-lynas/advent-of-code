@@ -1,7 +1,7 @@
-import itertools
+#!/usr/bin/env python2
 
-def getPosVel(pos,vel):
-	return ":".join([",".join([str(c) for c in p]) for p in pos])+"-"+":".join([",".join([str(c) for c in p]) for p in vel])
+import itertools
+from copy import deepcopy
 
 pos = [[3,-6,6],[10,7,-9],[-3,-7,9],[-8,0,4]]
 """
@@ -12,13 +12,16 @@ pos = [[-1, 0, 2],
 """
 vel = [[0,0,0] for i in range(len(pos))]
 
-original = getPosVel(pos,vel)
+oPos = deepcopy(pos)
+oVel = deepcopy(vel)
 
 for i in xrange(99999999999999):
-	if i % 10000 == 0:
+	if i % 100000 == 0:
 		print i
+		print pos
+		print vel
 
-	if getPosVel(pos,vel) == original and i != 0:
+	if pos == oPos and vel == oVel and i != 0:
 		break
 
 	energy = 0
