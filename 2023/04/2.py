@@ -1,5 +1,3 @@
-from collections import deque
-
 with open("input") as f:
     raw_lines = [line.split(":")[1] for line in f.read().strip().split("\n")]
 
@@ -9,15 +7,11 @@ for line in raw_lines:
     mine = [int(n) for n in line.split("|")[1].strip().split()]
     lines.append((winning, mine))
 
-q = deque(range(len(lines)))
-count = len(lines)
-while q:
-    i = q.popleft()
-    winning = lines[i][0]
-    mine = lines[i][1]
+occurences = [1 for _ in range(len(lines))]
+for i, line in enumerate(lines):
+    winning = line[0]
+    mine = line[1]
     score = sum(1 for n in mine if n in winning)
     for j in range(score):
-        q.append(i+j+1)
-        count += 1
-    print(len(q))
-print(count)
+        occurences[i+j+1] += occurences[i]
+print(sum(occurences))
