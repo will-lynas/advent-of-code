@@ -1,6 +1,6 @@
 use std::fs;
 
-pub fn part1() {
+fn parse() -> (Vec<u32>, Vec<u32>) {
     let content = fs::read_to_string("src/day01/input.txt").unwrap();
     let lines = content.trim().lines();
     let mut left = Vec::<u32>::new();
@@ -12,6 +12,11 @@ pub fn part1() {
     }
     left.sort();
     right.sort();
+    (left, right)
+}
+
+pub fn part1() {
+    let (left, right) = parse();
     let dist: u32 = left
         .into_iter()
         .zip(right)
