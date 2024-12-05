@@ -16,7 +16,7 @@ pub fn part1() {
             nums.clone().all(|n| (1..=3).contains(&n)) || nums.all(|n| (-3..=-1).contains(&n))
         })
         .count();
-    print!("{count:?}")
+    println!("{count:?}")
 }
 
 pub fn part2() {}
