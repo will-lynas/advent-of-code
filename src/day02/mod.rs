@@ -25,4 +25,16 @@ pub fn part1() {
     println!("{count:?}")
 }
 
-pub fn part2() {}
+pub fn part2() {
+    let count = lines()
+        .iter()
+        .filter(|&line| {
+            (0..line.len()).any(|i| {
+                let mut v = line.clone();
+                v.remove(i);
+                is_safe(&v)
+            })
+        })
+        .count();
+    println!("{count:?}")
+}
