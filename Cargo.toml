@@ -2,6 +2,7 @@
 name = "advent-of-code"
 version = "0.1.0"
 edition = "2021"
+rust-version = "1.83"
 
 [dependencies]
 itertools = "0.13.0"
