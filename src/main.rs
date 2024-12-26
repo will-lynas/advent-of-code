@@ -1,12 +1,18 @@
-mod day01;
-mod day02;
-mod day03;
+use clap::Parser;
+
+#[derive(Parser, Debug)]
+struct Args {
+    year: Option<u32>,
+    day: Option<u32>,
+}
 
 fn main() {
-    day01::part1();
-    day01::part2();
-    day02::part1();
-    day02::part2();
-    day03::part1();
-    day03::part2();
+    let args = Args::parse();
+
+    match (args.year, args.day) {
+        (Some(year), Some(day)) => println!("Year: {}, Day: {}", year, day),
+        (Some(year), None) => println!("Year: {}, Day: None", year),
+        (None, None) => println!("Year: None, Day: None"),
+        (None, Some(_)) => unreachable!(),
+    }
 }
