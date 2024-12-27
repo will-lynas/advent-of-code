@@ -1,10 +1,7 @@
-use std::fs;
-
 use itertools::Itertools;
 
-fn lines() -> Vec<Vec<i32>> {
-    let content = fs::read_to_string("src/day02/input.txt").unwrap();
-    content
+fn lines(input: &str) -> Vec<Vec<i32>> {
+    input
         .trim()
         .lines()
         .map(|line| {
@@ -20,13 +17,12 @@ fn is_safe(nums: &[i32]) -> bool {
     nums.clone().all(|n| (1..=3).contains(&n)) || nums.all(|n| (-3..=-1).contains(&n))
 }
 
-pub fn part1() {
-    let count = lines().iter().filter(|line| is_safe(line)).count();
-    println!("{count:?}")
+pub fn part1(input: &str) -> usize {
+    lines(input).iter().filter(|line| is_safe(line)).count()
 }
 
-pub fn part2() {
-    let count = lines()
+pub fn part2(input: &str) -> usize {
+    lines(input)
         .iter()
         .filter(|&line| {
             (0..line.len()).any(|i| {
@@ -35,6 +31,30 @@ pub fn part2() {
                 is_safe(&v)
             })
         })
-        .count();
-    println!("{count:?}")
+        .count()
+}
+
+#[cfg(test)]
+mod test {
+    use super::*;
+    use indoc::indoc;
+
+    const EXAMPLE: &str = indoc! { "
+        7 6 4 2 1
+        1 2 7 8 9
+        9 7 6 2 1
+        1 3 2 4 5
+        8 6 4 4 1
+        1 3 6 7 9
+    "};
+
+    #[test]
+    fn part1_test() {
+        assert_eq!(part1(EXAMPLE), 2);
+    }
+
+    #[test]
+    fn part2_test() {
+        assert_eq!(part2(EXAMPLE), 4);
+    }
 }
