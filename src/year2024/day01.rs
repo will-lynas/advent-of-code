@@ -1,6 +1,6 @@
 use std::collections::HashMap;
 
-pub fn parse(input: &str) -> (Vec<u32>, Vec<u32>) {
+fn parse(input: &str) -> (Vec<u32>, Vec<u32>) {
     let lines = input.trim().lines();
     let mut left = Vec::<u32>::new();
     let mut right = Vec::<u32>::new();
