@@ -18,7 +18,7 @@ pub fn part1(input: &str) -> u32 {
     let (left, right) = parse(input);
     left.into_iter()
         .zip(right)
-        .map(|(x, y)| x.abs_diff(y.clone()))
+        .map(|(x, y)| x.abs_diff(y))
         .sum()
 }
 
@@ -27,7 +27,7 @@ pub fn part2(input: &str) -> u32 {
     let counts = right
         .into_iter()
         .fold(HashMap::<u32, u32>::new(), |mut acc, item| {
-            *acc.entry(item.clone()).or_insert(0) += 1;
+            *acc.entry(item).or_insert(0) += 1;
             acc
         });
     left.iter()
