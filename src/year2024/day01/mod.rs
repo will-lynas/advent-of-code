@@ -1,8 +1,9 @@
-use std::{collections::HashMap, fs};
+use std::collections::HashMap;
 
-fn parse() -> (Vec<u32>, Vec<u32>) {
-    let content = fs::read_to_string("src/day01/input.txt").unwrap();
-    let lines = content.trim().lines();
+type Input = (Vec<u32>, Vec<u32>);
+
+pub fn parse(input: &str) -> Input {
+    let lines = input.trim().lines();
     let mut left = Vec::<u32>::new();
     let mut right = Vec::<u32>::new();
     for line in lines {
@@ -15,27 +16,23 @@ fn parse() -> (Vec<u32>, Vec<u32>) {
     (left, right)
 }
 
-pub fn part1() {
-    let (left, right) = parse();
-    let dist: u32 = left
-        .into_iter()
+pub fn part1(input: &Input) -> u32 {
+    let (left, right) = input;
+    left.into_iter()
         .zip(right)
-        .map(|(x, y)| x.abs_diff(y))
-        .sum();
-    println!("{dist}")
+        .map(|(x, y)| x.abs_diff(y.clone()))
+        .sum()
 }
 
-pub fn part2() {
-    let (left, right) = parse();
+pub fn part2(input: &Input) -> u32 {
+    let (left, right) = input;
     let counts = right
         .into_iter()
         .fold(HashMap::<u32, u32>::new(), |mut acc, item| {
-            *acc.entry(item).or_insert(0) += 1;
+            *acc.entry(item.clone()).or_insert(0) += 1;
             acc
         });
-    let sum: u32 = left
-        .iter()
+    left.iter()
         .filter_map(|num| counts.get(num).map(|&val2| num * val2))
-        .sum();
-    println!("{sum}");
+        .sum()
 }
