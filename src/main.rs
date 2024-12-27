@@ -9,6 +9,7 @@ use utils::ansi::*;
 
 pub mod utils;
 
+pub mod year2015;
 pub mod year2024;
 
 #[derive(Parser, Debug)]
@@ -21,6 +22,7 @@ fn main() {
     let args = Args::parse();
 
     let solutions: Vec<_> = empty()
+        .chain(year2015())
         .chain(year2024())
         .filter(|solution| args.year.clone().is_none_or(|y| y == solution.year))
         .filter(|solution| args.day.clone().is_none_or(|d| d == solution.day))
@@ -85,6 +87,10 @@ macro_rules! run {
         }
     }
 }
+
+run!(year2015
+    day01
+);
 
 run!(year2024
     day01, day02, day03
