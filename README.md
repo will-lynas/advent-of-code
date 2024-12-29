@@ -1,3 +1,3 @@
 # advent-of-code
 
-Repo structure is inspired by maneatingape/advent-of-code-rust
+Thank you to [maneatingape/advent-of-code-rust](https://github.com/maneatingape/advent-of-code-rust) for the structure of this repo
