@@ -31,7 +31,6 @@ pub fn part2(input: &str) -> usize {
 #[cfg(test)]
 mod test {
     use super::*;
-    // Most of the test cases are excluded
 
     #[test]
     fn part1_test() {
