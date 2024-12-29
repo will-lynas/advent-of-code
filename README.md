@@ -1,5 +1,3 @@
-# My solutions to Advent Of Code
+# advent-of-code
 
-All solutions are my own
-
-Repo structure is copied from https://github.com/maneatingape/advent-of-code-rust
+Repo structure is inspired by maneatingape/advent-of-code-rust
