@@ -20,15 +20,15 @@ pub fn part2(_input: &str) -> i32 {
 mod test {
     use super::*;
 
-    const EXAMPLE: &str = "xmul(2,4)%&mul[3,7]!@^do_not_mul(5,5)+mul(32,64]then(mul(11,8)mul(8,5))";
-
     #[test]
     fn part1_test() {
-        assert_eq!(part1(EXAMPLE), 161);
+        let example = "xmul(2,4)%&mul[3,7]!@^do_not_mul(5,5)+mul(32,64]then(mul(11,8)mul(8,5))";
+        assert_eq!(part1(example), 161);
     }
 
     #[test]
     fn part2_test() {
-        assert_eq!(part2(EXAMPLE), 48);
+        let example = "xmul(2,4)&mul[3,7]!^don't()_mul(5,5)+mul(32,64](mul(11,8)undo()?mul(8,5))";
+        assert_eq!(part2(example), 48);
     }
 }
