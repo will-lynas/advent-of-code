@@ -12,8 +12,15 @@ pub fn part1(input: &str) -> i32 {
     sum
 }
 
-pub fn part2(_input: &str) -> i32 {
-    0
+pub fn part2(input: &str) -> i32 {
+    let mut parts = input.split("don't()");
+    let mut enable_parts = vec![parts.next().unwrap()]; // Start enabled
+    for part in parts {
+        if let Some((_, good_part)) = part.split_once("do()") {
+            enable_parts.push(good_part);
+        };
+    }
+    enable_parts.iter().map(|part| part1(part)).sum()
 }
 
 #[cfg(test)]
