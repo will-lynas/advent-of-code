@@ -56,8 +56,29 @@ pub fn part1(input: &str) -> i32 {
     count
 }
 
-pub fn part2(_input: &str) -> usize {
-    0
+pub fn part2(input: &str) -> usize {
+    let grid: Vec<Vec<char>> = input.lines().map(|row| row.chars().collect()).collect();
+
+    let rows = grid.len();
+    let cols = grid[0].len();
+
+    let mut count = 0;
+    for row in 1..rows - 1 {
+        for col in 1..cols - 1 {
+            if grid[row][col] != 'A' {
+                continue;
+            }
+
+            if ((grid[row - 1][col - 1] == 'M' && grid[row + 1][col + 1] == 'S')
+                || (grid[row - 1][col - 1] == 'S' && grid[row + 1][col + 1] == 'M'))
+                && ((grid[row + 1][col - 1] == 'M' && grid[row - 1][col + 1] == 'S')
+                    || (grid[row + 1][col - 1] == 'S' && grid[row - 1][col + 1] == 'M'))
+            {
+                count += 1
+            }
+        }
+    }
+    count
 }
 
 #[cfg(test)]
@@ -86,6 +107,6 @@ mod test {
 
     #[test]
     fn part2_test() {
-        assert_eq!(part2(EXAMPLE), 0);
+        assert_eq!(part2(EXAMPLE), 9);
     }
 }
