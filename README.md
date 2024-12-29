@@ -3,7 +3,9 @@
 
 ## Running the code
 
-### To run the AOC examples:
+### Running against the examples
+
+These are the small examples given in the text of the problem
 
 Everything:
 ```
@@ -16,6 +18,31 @@ cargo test year2024
 Specific day:
 ```
 cargo test year2024::day04
+```
+
+### Running against puzzle inputs
+
+First, place the relevant puzzle inputs in the path `input/yearXXXX/dayYY.txt`
+
+To run everything:
+```
+cargo run
+```
+Specific year:
+```
+cargo run year2024
+```
+Specific day:
+```
+cargo run year2024 day04
+```
+
+The output should look something like this:
+```
+year2024 day04
+    Part 1: 2517
+    Part 2: 1960
+🕓 7 ms
 ```
 
 ## Acknowledgments
