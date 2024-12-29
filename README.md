@@ -1,6 +1,5 @@
 # advent-of-code
-
-![image](https://github.com/user-attachments/assets/c5209052-c2b5-40aa-a60b-1b427ef35178)
+<img src="https://github.com/user-attachments/assets/c5209052-c2b5-40aa-a60b-1b427ef35178" width=400>
 
 ## Running the code
 
