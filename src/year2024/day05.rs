@@ -30,7 +30,10 @@ pub fn part1(input: &str) -> u32 {
     updates
         .iter()
         .filter_map(|update| {
-            if update.is_sorted_by(|a, b| rules.get(a).unwrap().contains(b)) {
+            if update.is_sorted_by(|a, b| match rules.get(a) {
+                None => false,
+                Some(h) => h.contains(b),
+            }) {
                 Some(update[update.len() / 2])
             } else {
                 None
