@@ -24,13 +24,16 @@ fn parse(input: &str) -> (HashMap<u32, HashSet<u32>>, Vec<Vec<u32>>) {
 
 pub fn part1(input: &str) -> u32 {
     let (rules, updates) = parse(input);
-    let mut total = 0;
-    for update in updates {
-        if update.is_sorted_by(|a, b| rules.get(a).unwrap().contains(b)) {
-            total += update[update.len() / 2];
-        }
-    }
-    total
+    updates
+        .iter()
+        .map(|update| {
+            if update.is_sorted_by(|a, b| rules.get(a).unwrap().contains(b)) {
+                update[update.len() / 2]
+            } else {
+                0
+            }
+        })
+        .sum()
 }
 
 pub fn part2(_input: &str) -> i32 {
