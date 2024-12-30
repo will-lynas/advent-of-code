@@ -55,7 +55,11 @@ fn main() {
         }
     }
 
-    println!("{BOLD}{WHITE}🕓 {} ms{RESET}", duration.as_millis());
+    println!(
+        "{BOLD}{WHITE}🕓 {}.{} ms{RESET}",
+        duration.as_millis(),
+        duration.as_nanos() % 1000
+    );
 }
 
 struct Solution {
