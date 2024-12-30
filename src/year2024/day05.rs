@@ -29,11 +29,11 @@ pub fn part1(input: &str) -> u32 {
     let (rules, updates) = parse(input);
     updates
         .iter()
-        .map(|update| {
+        .filter_map(|update| {
             if update.is_sorted_by(|a, b| rules.get(a).unwrap().contains(b)) {
-                update[update.len() / 2]
+                Some(update[update.len() / 2])
             } else {
-                0
+                None
             }
         })
         .sum()
@@ -43,7 +43,7 @@ pub fn part2(input: &str) -> u32 {
     let (rules, updates) = parse(input);
     updates
         .iter()
-        .map(|update| {
+        .filter_map(|update| {
             let mut update_copy = update.clone();
             update_copy.sort_by(|a, b| {
                 if rules.get(a).unwrap().contains(b) {
@@ -53,9 +53,9 @@ pub fn part2(input: &str) -> u32 {
                 }
             });
             if &update_copy != update {
-                update_copy[update_copy.len() / 2]
+                Some(update_copy[update_copy.len() / 2])
             } else {
-                0
+                None
             }
         })
         .sum()
