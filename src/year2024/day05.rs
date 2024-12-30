@@ -1,4 +1,7 @@
-use std::collections::{HashMap, HashSet};
+use std::{
+    cmp::Ordering,
+    collections::{HashMap, HashSet},
+};
 
 fn parse(input: &str) -> (HashMap<u32, HashSet<u32>>, Vec<Vec<u32>>) {
     let mut parts = input.split("\n\n");
@@ -36,8 +39,26 @@ pub fn part1(input: &str) -> u32 {
         .sum()
 }
 
-pub fn part2(_input: &str) -> i32 {
-    0
+pub fn part2(input: &str) -> u32 {
+    let (rules, updates) = parse(input);
+    updates
+        .iter()
+        .map(|update| {
+            let mut update_copy = update.clone();
+            update_copy.sort_by(|a, b| {
+                if rules.get(a).unwrap().contains(b) {
+                    Ordering::Less
+                } else {
+                    Ordering::Greater
+                }
+            });
+            if &update_copy != update {
+                update_copy[update_copy.len() / 2]
+            } else {
+                0
+            }
+        })
+        .sum()
 }
 
 #[cfg(test)]
@@ -84,6 +105,6 @@ mod test {
 
     #[test]
     fn part2_test() {
-        assert_eq!(part2(EXAMPLE), 0);
+        assert_eq!(part2(EXAMPLE), 123);
     }
 }
