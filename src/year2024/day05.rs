@@ -26,18 +26,7 @@ pub fn part1(input: &str) -> u32 {
     let (rules, updates) = parse(input);
     let mut total = 0;
     for update in updates {
-        let mut good = true;
-        'outer: for (i, n) in update.iter().enumerate() {
-            if let Some(to_check) = rules.get(n) {
-                for m in &update[..i] {
-                    if to_check.contains(m) {
-                        good = false;
-                        break 'outer;
-                    }
-                }
-            }
-        }
-        if good {
+        if update.is_sorted_by(|a, b| rules.get(a).unwrap().contains(b)) {
             total += update[update.len() / 2];
         }
     }
