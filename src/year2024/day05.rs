@@ -48,11 +48,14 @@ pub fn part2(input: &str) -> u32 {
         .iter()
         .filter_map(|update| {
             let mut update_copy = update.clone();
-            update_copy.sort_by(|a, b| {
-                if rules.get(a).unwrap().contains(b) {
-                    Ordering::Less
-                } else {
-                    Ordering::Greater
+            update_copy.sort_by(|a, b| match rules.get(a) {
+                None => Ordering::Greater,
+                Some(h) => {
+                    if h.contains(b) {
+                        Ordering::Less
+                    } else {
+                        Ordering::Greater
+                    }
                 }
             });
             if &update_copy != update {
