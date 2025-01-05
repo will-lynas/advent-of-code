@@ -56,41 +56,57 @@ pub fn part2(input: &str) -> usize {
     let rows = grid.len();
     let cols = grid[0].len();
     let (gx, gy) = find_guard(&grid);
-    let mut count = 0;
 
-    for ox in 0..rows {
-        for oy in 0..cols {
-            if grid[ox][oy] != '.' {
-                continue;
+    let (mut x, mut y) = (gx, gy);
+    let mut di = 0;
+    let mut path = HashSet::new();
+    'outer: loop {
+        path.insert((x, y));
+        loop {
+            let (dx, dy) = DIRS[di];
+            let (tx, ty) = (x as isize + dx, y as isize + dy);
+            if tx < 0 || tx >= rows as isize || ty < 0 || ty >= cols as isize {
+                break 'outer;
             }
-            grid[ox][oy] = '#';
+            if grid[tx as usize][ty as usize] != '#' {
+                (x, y) = (tx as usize, ty as usize);
+                break;
+            }
+            di += 1;
+            di %= 4;
+        }
+    }
+    path.remove(&(gx, gy));
 
-            let (mut x, mut y) = (gx, gy);
-            let mut di = 0;
+    let mut count = 0;
+    for (ox, oy) in path {
+        grid[ox][oy] = '#';
 
-            let mut visited = HashSet::new();
-            'outer: loop {
-                if !visited.insert((x, y, di)) {
-                    count += 1;
+        let (mut x, mut y) = (gx, gy);
+        let mut di = 0;
+
+        let mut visited = HashSet::new();
+        'outer: loop {
+            if !visited.insert((x, y, di)) {
+                count += 1;
+                break;
+            }
+            loop {
+                let (dx, dy) = DIRS[di];
+                let (tx, ty) = (x as isize + dx, y as isize + dy);
+                if tx < 0 || tx >= rows as isize || ty < 0 || ty >= cols as isize {
+                    break 'outer;
+                }
+                if grid[tx as usize][ty as usize] != '#' {
+                    (x, y) = (tx as usize, ty as usize);
                     break;
                 }
-                loop {
-                    let (dx, dy) = DIRS[di];
-                    let (tx, ty) = (x as isize + dx, y as isize + dy);
-                    if tx < 0 || tx >= rows as isize || ty < 0 || ty >= cols as isize {
-                        break 'outer;
-                    }
-                    if grid[tx as usize][ty as usize] != '#' {
-                        (x, y) = (tx as usize, ty as usize);
-                        break;
-                    }
-                    di += 1;
-                    di %= 4;
-                }
+                di += 1;
+                di %= 4;
             }
-
-            grid[ox][oy] = '.';
         }
+
+        grid[ox][oy] = '.';
     }
     count
 }
