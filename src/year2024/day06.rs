@@ -1,30 +1,8 @@
 use std::collections::HashSet;
-use std::ops::Add;
-
-#[derive(Debug, Copy, Clone, PartialEq, Hash, Eq)]
-struct Point {
-    row: i32,
-    col: i32,
-}
-
-impl Point {
-    fn new(x: i32, y: i32) -> Self {
-        Self { row: x, col: y }
-    }
-}
-
-impl Add for Point {
-    type Output = Self;
-
-    fn add(self, other: Self) -> Self {
-        Self {
-            row: self.row + other.row,
-            col: self.col + other.col,
-        }
-    }
-}
 
 type Grid = Vec<Vec<char>>;
+
+const DIRS: [(isize, isize); 4] = [(-1, 0), (0, 1), (1, 0), (0, -1)];
 
 fn parse(input: &str) -> Grid {
     input
@@ -34,11 +12,11 @@ fn parse(input: &str) -> Grid {
         .collect()
 }
 
-fn find_guard(grid: &Grid) -> Point {
+fn find_guard(grid: &Grid) -> (usize, usize) {
     for (i, line) in grid.iter().enumerate() {
         for (j, c) in line.iter().enumerate() {
             if c == &'^' {
-                return Point::new(i as i32, j as i32);
+                return (i, j);
             }
         }
     }
@@ -47,31 +25,27 @@ fn find_guard(grid: &Grid) -> Point {
 
 pub fn part1(input: &str) -> usize {
     let grid = parse(input);
-    let rows = grid.len() as i32;
-    let cols = grid[0].len() as i32;
-    let mut pos = find_guard(&grid);
+    let rows = grid.len();
+    let cols = grid[0].len();
 
-    let directions = [
-        Point::new(-1, 0),
-        Point::new(0, 1),
-        Point::new(1, 0),
-        Point::new(0, -1),
-    ];
-    let mut dir_index = 0;
+    let (mut x, mut y) = find_guard(&grid);
+    let mut di = 0;
 
     let mut visited = HashSet::new();
     'outer: loop {
-        visited.insert(pos);
+        visited.insert((x, y));
         loop {
-            let new_pos = pos + directions[dir_index % directions.len()];
-            if new_pos.row < 0 || new_pos.row >= rows || new_pos.col < 0 || new_pos.col >= cols {
+            let (dx, dy) = DIRS[di];
+            let (tx, ty) = (x as isize + dx, y as isize + dy);
+            if tx < 0 || tx >= rows as isize || ty < 0 || ty >= cols as isize {
                 break 'outer;
             }
-            if grid[new_pos.row as usize][new_pos.col as usize] != '#' {
-                pos = new_pos;
+            if grid[tx as usize][ty as usize] != '#' {
+                (x, y) = (tx as usize, ty as usize);
                 break;
             }
-            dir_index += 1;
+            di += 1;
+            di %= 4;
         }
     }
     visited.len()
