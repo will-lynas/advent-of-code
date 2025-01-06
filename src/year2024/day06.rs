@@ -54,10 +54,6 @@ pub fn part1(input: &str) -> usize {
     visited.len()
 }
 
-fn ceiling_division(a: usize, b: usize) -> usize {
-    (a + b - 1) / b
-}
-
 pub fn part2(input: &str) -> usize {
     let grid = parse(input);
     let rows = grid.len();
@@ -87,7 +83,7 @@ pub fn part2(input: &str) -> usize {
 
     let path_vec: Vec<_> = path.into_iter().collect();
     let threads: usize = available_parallelism().unwrap().into();
-    let chunk_size = ceiling_division(path_vec.len(), threads);
+    let chunk_size = path_vec.len().div_ceil(threads);
 
     let path_chunks: Vec<_> = path_vec
         .chunks(chunk_size)
