@@ -1,4 +1,4 @@
-use std::collections::HashSet;
+use std::{collections::HashSet, thread};
 
 type Grid = Vec<Vec<char>>;
 
@@ -52,7 +52,7 @@ pub fn part1(input: &str) -> usize {
 }
 
 pub fn part2(input: &str) -> usize {
-    let mut grid = parse(input);
+    let grid = parse(input);
     let rows = grid.len();
     let cols = grid[0].len();
     let (gx, gy) = find_guard(&grid);
@@ -78,37 +78,57 @@ pub fn part2(input: &str) -> usize {
     }
     path.remove(&(gx, gy));
 
-    let mut count = 0;
-    for (ox, oy) in path {
-        grid[ox][oy] = '#';
+    let path_chunks: Vec<_> = path
+        .into_iter()
+        .collect::<Vec<_>>()
+        .chunks(10)
+        .map(|chunk| chunk.to_vec())
+        .collect();
 
-        let (mut x, mut y) = (gx, gy);
-        let mut di = 0;
+    let handles: Vec<_> = path_chunks
+        .into_iter()
+        .map(|chunk| {
+            let mut grid = grid.clone();
+            thread::spawn(move || {
+                let mut local_count = 0;
+                for (ox, oy) in chunk {
+                    grid[ox][oy] = '#';
 
-        let mut visited = HashSet::new();
-        'outer: loop {
-            if !visited.insert((x, y, di)) {
-                count += 1;
-                break;
-            }
-            loop {
-                let (dx, dy) = DIRS[di];
-                let (tx, ty) = (x as isize + dx, y as isize + dy);
-                if tx < 0 || tx >= rows as isize || ty < 0 || ty >= cols as isize {
-                    break 'outer;
+                    let (mut x, mut y) = (gx, gy);
+                    let mut di = 0;
+
+                    let mut visited = HashSet::new();
+                    'outer: loop {
+                        if !visited.insert((x, y, di)) {
+                            local_count += 1;
+                            break;
+                        }
+                        loop {
+                            let (dx, dy) = DIRS[di];
+                            let (tx, ty) = (x as isize + dx, y as isize + dy);
+                            if tx < 0 || tx >= rows as isize || ty < 0 || ty >= cols as isize {
+                                break 'outer;
+                            }
+                            if grid[tx as usize][ty as usize] != '#' {
+                                (x, y) = (tx as usize, ty as usize);
+                                break;
+                            }
+                            di += 1;
+                            di %= 4;
+                        }
+                    }
+
+                    grid[ox][oy] = '.';
                 }
-                if grid[tx as usize][ty as usize] != '#' {
-                    (x, y) = (tx as usize, ty as usize);
-                    break;
-                }
-                di += 1;
-                di %= 4;
-            }
-        }
+                local_count
+            })
+        })
+        .collect();
 
-        grid[ox][oy] = '.';
-    }
-    count
+    handles
+        .into_iter()
+        .map(|handle| handle.join().unwrap())
+        .sum()
 }
 
 #[cfg(test)]
