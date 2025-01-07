@@ -63,22 +63,16 @@ pub fn part2(grid: &Grid<u8>) -> usize {
                     let mut dir = UP;
 
                     let mut visited = HashSet::new();
-                    'outer: loop {
+                    while grid.contains(pos + dir) {
+                        if grid[pos + dir] == b'#' {
+                            dir.rotate_clockwise();
+                            continue;
+                        }
                         if !visited.insert((pos, dir)) {
                             local_count += 1;
                             break;
                         }
-                        loop {
-                            let new_pos = pos + dir;
-                            if !grid.contains(new_pos) {
-                                break 'outer;
-                            }
-                            if grid[new_pos] != b'#' {
-                                pos = new_pos;
-                                break;
-                            }
-                            dir.rotate_clockwise();
-                        }
+                        pos += dir;
                     }
 
                     grid[obstacle_pos] = b'.';
