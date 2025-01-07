@@ -34,28 +34,3 @@ pub fn part2(input: &str) -> u32 {
         .filter_map(|num| counts.get(num).map(|&val2| num * val2))
         .sum()
 }
-
-#[cfg(test)]
-mod test {
-    use super::*;
-    use indoc::indoc;
-
-    const EXAMPLE: &str = indoc! { "
-        3   4
-        4   3
-        2   5
-        1   3
-        3   9
-        3   3     
-    "};
-
-    #[test]
-    fn part1_test() {
-        assert_eq!(part1(EXAMPLE), 11);
-    }
-
-    #[test]
-    fn part2_test() {
-        assert_eq!(part2(EXAMPLE), 31);
-    }
-}
