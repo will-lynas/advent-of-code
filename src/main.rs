@@ -75,8 +75,9 @@ macro_rules! run {
                 let wrapper = |data: String| {
                     use advent_of_code::$year::$day::*;
 
-                    let part1 = part1(&data);
-                    let part2 = part2(&data);
+                    let parsed = parse(&data);
+                    let part1 = part1(&parsed);
+                    let part2 = part2(&parsed);
 
                     (part1.to_string(), part2.to_string())
                 };

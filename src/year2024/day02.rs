@@ -1,6 +1,8 @@
 use itertools::Itertools;
 
-fn lines(input: &str) -> Vec<Vec<i32>> {
+type Lines = Vec<Vec<i32>>;
+
+pub fn parse(input: &str) -> Lines {
     input
         .trim()
         .lines()
@@ -12,17 +14,12 @@ fn lines(input: &str) -> Vec<Vec<i32>> {
         .collect()
 }
 
-fn is_safe(nums: &[i32]) -> bool {
-    let mut nums = nums.iter().tuple_windows().map(|(a, b)| a - b);
-    nums.clone().all(|n| (1..=3).contains(&n)) || nums.all(|n| (-3..=-1).contains(&n))
+pub fn part1(lines: &Lines) -> usize {
+    lines.iter().filter(|line| is_safe(line)).count()
 }
 
-pub fn part1(input: &str) -> usize {
-    lines(input).iter().filter(|line| is_safe(line)).count()
-}
-
-pub fn part2(input: &str) -> usize {
-    lines(input)
+pub fn part2(lines: &Lines) -> usize {
+    lines
         .iter()
         .filter(|&line| {
             (0..line.len()).any(|i| {
@@ -32,4 +29,9 @@ pub fn part2(input: &str) -> usize {
             })
         })
         .count()
+}
+
+fn is_safe(nums: &[i32]) -> bool {
+    let mut nums = nums.iter().tuple_windows().map(|(a, b)| a - b);
+    nums.clone().all(|n| (1..=3).contains(&n)) || nums.all(|n| (-3..=-1).contains(&n))
 }

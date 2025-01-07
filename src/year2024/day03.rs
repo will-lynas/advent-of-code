@@ -1,3 +1,7 @@
+pub fn parse(input: &str) -> String {
+    input.to_string()
+}
+
 pub fn part1(input: &str) -> i32 {
     let re = regex::Regex::new(r"mul\((\d{1,3}),(\d{1,3})\)").unwrap();
 

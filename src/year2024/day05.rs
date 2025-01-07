@@ -3,7 +3,9 @@ use std::{
     collections::{HashMap, HashSet},
 };
 
-fn parse(input: &str) -> (HashMap<u32, HashSet<u32>>, Vec<Vec<u32>>) {
+type Input = (HashMap<u32, HashSet<u32>>, Vec<Vec<u32>>);
+
+pub fn parse(input: &str) -> Input {
     let mut parts = input.split("\n\n");
 
     let mut rules_map = HashMap::new();
@@ -25,8 +27,7 @@ fn parse(input: &str) -> (HashMap<u32, HashSet<u32>>, Vec<Vec<u32>>) {
     (rules_map, updates)
 }
 
-pub fn part1(input: &str) -> u32 {
-    let (rules, updates) = parse(input);
+pub fn part1((rules, updates): &Input) -> u32 {
     updates
         .iter()
         .filter_map(|update| {
@@ -42,8 +43,7 @@ pub fn part1(input: &str) -> u32 {
         .sum()
 }
 
-pub fn part2(input: &str) -> u32 {
-    let (rules, updates) = parse(input);
+pub fn part2((rules, updates): &Input) -> u32 {
     updates
         .iter()
         .filter_map(|update| {

@@ -1,3 +1,7 @@
+pub fn parse(input: &str) -> String {
+    input.to_string()
+}
+
 pub fn part1(input: &str) -> i32 {
     let mut floor = 0;
     for c in input.trim().chars() {

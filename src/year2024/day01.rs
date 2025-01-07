@@ -1,6 +1,8 @@
 use std::collections::HashMap;
 
-fn parse(input: &str) -> (Vec<u32>, Vec<u32>) {
+type Lists = (Vec<u32>, Vec<u32>);
+
+pub fn parse(input: &str) -> Lists {
     let lines = input.trim().lines();
     let mut left = Vec::<u32>::new();
     let mut right = Vec::<u32>::new();
@@ -14,16 +16,18 @@ fn parse(input: &str) -> (Vec<u32>, Vec<u32>) {
     (left, right)
 }
 
-pub fn part1(input: &str) -> u32 {
-    let (left, right) = parse(input);
+pub fn part1(input: &Lists) -> u32 {
+    let left = input.0.clone();
+    let right = input.1.clone();
     left.into_iter()
         .zip(right)
         .map(|(x, y)| x.abs_diff(y))
         .sum()
 }
 
-pub fn part2(input: &str) -> u32 {
-    let (left, right) = parse(input);
+pub fn part2(input: &Lists) -> u32 {
+    let left = input.0.clone();
+    let right = input.1.clone();
     let counts = right
         .into_iter()
         .fold(HashMap::<u32, u32>::new(), |mut acc, item| {

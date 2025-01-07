@@ -7,7 +7,7 @@ type Grid = Vec<Vec<char>>;
 
 const DIRS: [(isize, isize); 4] = [(-1, 0), (0, 1), (1, 0), (0, -1)];
 
-fn parse(input: &str) -> Grid {
+pub fn parse(input: &str) -> Grid {
     input
         .trim()
         .lines()
@@ -26,12 +26,11 @@ fn find_guard(grid: &Grid) -> (usize, usize) {
     unreachable!()
 }
 
-pub fn part1(input: &str) -> usize {
-    let grid = parse(input);
+pub fn part1(grid: &Grid) -> usize {
     let rows = grid.len();
     let cols = grid[0].len();
 
-    let (mut x, mut y) = find_guard(&grid);
+    let (mut x, mut y) = find_guard(grid);
     let mut di = 0;
 
     let mut visited = HashSet::new();
@@ -54,11 +53,10 @@ pub fn part1(input: &str) -> usize {
     visited.len()
 }
 
-pub fn part2(input: &str) -> usize {
-    let grid = parse(input);
+pub fn part2(grid: &Grid) -> usize {
     let rows = grid.len();
     let cols = grid[0].len();
-    let (gx, gy) = find_guard(&grid);
+    let (gx, gy) = find_guard(grid);
 
     let (mut x, mut y) = (gx, gy);
     let mut di = 0;

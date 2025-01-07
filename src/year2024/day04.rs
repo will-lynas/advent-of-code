@@ -1,6 +1,10 @@
-pub fn part1(input: &str) -> i32 {
-    let grid: Vec<Vec<char>> = input.lines().map(|row| row.chars().collect()).collect();
+type Grid = Vec<Vec<char>>;
 
+pub fn parse(input: &str) -> Grid {
+    input.lines().map(|row| row.chars().collect()).collect()
+}
+
+pub fn part1(grid: &Grid) -> i32 {
     let rows = grid.len();
     let cols = grid[0].len();
 
@@ -56,9 +60,7 @@ pub fn part1(input: &str) -> i32 {
     count
 }
 
-pub fn part2(input: &str) -> usize {
-    let grid: Vec<Vec<char>> = input.lines().map(|row| row.chars().collect()).collect();
-
+pub fn part2(grid: &Grid) -> usize {
     let rows = grid.len();
     let cols = grid[0].len();
 
