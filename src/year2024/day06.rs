@@ -1,7 +1,5 @@
-use std::{
-    collections::HashSet,
-    thread::{self, available_parallelism},
-};
+use gxhash::{HashSet, HashSetExt};
+use std::thread::{self, available_parallelism};
 
 use crate::utils::{grid::Grid, point::UP};
 

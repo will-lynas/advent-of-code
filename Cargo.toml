@@ -6,6 +6,7 @@ rust-version = "1.83"
 
 [dependencies]
 clap = { version = "4.5.23", features = ["derive"] }
+gxhash = "3.4.1"
 itertools = "0.13.0"
 regex = "1.11.1"
 
