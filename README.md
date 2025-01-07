@@ -15,6 +15,7 @@ Inputs should be placed in the path `input/yearXXXX/dayYY.txt`
 - Run everything: `cargo run`
 - Specific year: `cargo run year2024`
 - Specific day: `cargo run year2024 day04`
+- To run with the `release` profile (much faster): `cargo run --release` or `cargo run --release -- year2024 day04`
 
 ### Examples
 
