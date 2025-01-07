@@ -5,7 +5,7 @@ macro_rules! benchmark {
     ($year:tt $($day:tt),*) => {
         mod $year {$(
             mod $day {
-                use advent_of_code::$year::$day::*;
+                use advent_of_code::$year::$day as solution;
                 use std::fs::read_to_string;
                 use std::path::Path;
                 use std::sync::LazyLock;
@@ -19,13 +19,13 @@ macro_rules! benchmark {
                 });
 
                 #[bench]
-                fn part1_bench(b: &mut Bencher) {
-                    b.iter(|| part1(&INPUT));
+                fn part1(b: &mut Bencher) {
+                    b.iter(|| solution::part1(&INPUT));
                 }
 
                 #[bench]
-                fn part2_bench(b: &mut Bencher) {
-                    b.iter(|| part2(&INPUT));
+                fn part2(b: &mut Bencher) {
+                    b.iter(|| solution::part2(&INPUT));
                 }
             }
         )*}
