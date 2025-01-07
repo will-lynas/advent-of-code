@@ -72,10 +72,7 @@ pub fn part2(grid: &Grid) -> usize {
     let threads: usize = available_parallelism().unwrap().into();
     let chunk_size = path_vec.len().div_ceil(threads);
 
-    let path_chunks: Vec<_> = path_vec
-        .chunks(chunk_size)
-        .map(|chunk| chunk.to_vec())
-        .collect();
+    let path_chunks: Vec<_> = path_vec.chunks(chunk_size).map(<[_]>::to_vec).collect();
 
     let handles: Vec<_> = path_chunks
         .into_iter()
