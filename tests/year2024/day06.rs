@@ -1,6 +1,6 @@
 use indoc::indoc;
 
-use advent_of_code::year2024::day06::*;
+use advent_of_code::year2024::day06 as solution;
 
 const EXAMPLE: &str = indoc! {"
         ....#.....
@@ -16,11 +16,11 @@ const EXAMPLE: &str = indoc! {"
     "};
 
 #[test]
-fn part1_test() {
-    assert_eq!(part1(EXAMPLE), 41);
+fn part1() {
+    assert_eq!(solution::part1(EXAMPLE), 41);
 }
 
 #[test]
-fn part2_test() {
-    assert_eq!(part2(EXAMPLE), 6);
+fn part2() {
+    assert_eq!(solution::part2(EXAMPLE), 6);
 }
