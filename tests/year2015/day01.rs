@@ -2,10 +2,12 @@ use advent_of_code::year2015::day01 as solution;
 
 #[test]
 fn part1() {
-    assert_eq!(solution::part1("))((((("), 3);
+    let input = solution::parse("))(((((");
+    assert_eq!(solution::part1(&input), 3);
 }
 
 #[test]
 fn part2() {
-    assert_eq!(solution::part2("()())"), 5);
+    let input = solution::parse("()())");
+    assert_eq!(solution::part2(&input), 5);
 }

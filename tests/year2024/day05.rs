@@ -34,10 +34,12 @@ const EXAMPLE: &str = indoc! {"
 
 #[test]
 fn part1() {
-    assert_eq!(solution::part1(EXAMPLE), 143);
+    let input = solution::parse(EXAMPLE);
+    assert_eq!(solution::part1(&input), 143);
 }
 
 #[test]
 fn part2() {
-    assert_eq!(solution::part2(EXAMPLE), 123);
+    let input = solution::parse(EXAMPLE);
+    assert_eq!(solution::part2(&input), 123);
 }

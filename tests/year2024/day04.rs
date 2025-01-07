@@ -17,10 +17,12 @@ const EXAMPLE: &str = indoc! {"
 
 #[test]
 fn part1() {
-    assert_eq!(solution::part1(EXAMPLE), 18);
+    let input = solution::parse(EXAMPLE);
+    assert_eq!(solution::part1(&input), 18);
 }
 
 #[test]
 fn part2() {
-    assert_eq!(solution::part2(EXAMPLE), 9);
+    let input = solution::parse(EXAMPLE);
+    assert_eq!(solution::part2(&input), 9);
 }
