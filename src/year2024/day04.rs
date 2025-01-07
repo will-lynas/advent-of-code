@@ -76,7 +76,7 @@ pub fn part2(grid: &Grid) -> usize {
                 && ((grid[row + 1][col - 1] == 'M' && grid[row - 1][col + 1] == 'S')
                     || (grid[row + 1][col - 1] == 'S' && grid[row - 1][col + 1] == 'M'))
             {
-                count += 1
+                count += 1;
             }
         }
     }
