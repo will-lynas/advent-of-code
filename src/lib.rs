@@ -1,6 +1,3 @@
-#![feature(test)]
-extern crate test;
-
 pub mod utils;
 
 pub mod year2015;
