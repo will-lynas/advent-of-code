@@ -58,10 +58,10 @@ pub fn part2((rules, updates): &Input) -> u32 {
                     }
                 }
             });
-            if &update_copy != update {
-                Some(update_copy[update_copy.len() / 2])
-            } else {
+            if &update_copy == update {
                 None
+            } else {
+                Some(update_copy[update_copy.len() / 2])
             }
         })
         .sum()
