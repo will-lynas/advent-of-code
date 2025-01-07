@@ -14,6 +14,7 @@ pub struct Point {
 }
 
 impl Point {
+    #[inline]
     pub const fn new(x: i32, y: i32) -> Self {
         Self { x, y }
     }
@@ -22,6 +23,7 @@ impl Point {
 impl Add for Point {
     type Output = Point;
 
+    #[inline]
     fn add(self, rhs: Self) -> Self {
         Self::new(self.x + rhs.x, self.y + rhs.y)
     }
