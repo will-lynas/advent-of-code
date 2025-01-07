@@ -1,6 +1,6 @@
 # advent-of-code
 
-My (work in progress) solutions to [Advent of Code](https://adventofcode.com/) written in Rust
+My solutions to [Advent of Code](https://adventofcode.com/) written in Rust
 
 <img src="https://github.com/user-attachments/assets/c5209052-c2b5-40aa-a60b-1b427ef35178" width=400>
 
