@@ -3,23 +3,14 @@ use std::{
     thread::{self, available_parallelism},
 };
 
-use crate::utils::point::{Point, UP};
-
-type Grid = Vec<Vec<char>>;
+use crate::utils::{grid::Grid, point::UP};
 
 pub fn parse(input: &str) -> Grid {
-    input
-        .trim()
-        .lines()
-        .map(|line| line.chars().collect())
-        .collect()
+    Grid::parse(input)
 }
 
 pub fn part1(grid: &Grid) -> usize {
-    let rows = grid.len();
-    let cols = grid[0].len();
-
-    let mut pos = find_guard(grid);
+    let mut pos = grid.find(&'^').unwrap();
     let mut dir = UP;
 
     let mut visited = HashSet::new();
@@ -27,14 +18,10 @@ pub fn part1(grid: &Grid) -> usize {
         visited.insert(pos);
         loop {
             let new_pos = pos + dir;
-            if new_pos.y < 0
-                || new_pos.y >= rows as i32
-                || new_pos.x < 0
-                || new_pos.x >= cols as i32
-            {
+            if !grid.contains(new_pos) {
                 break 'outer;
             }
-            if grid[new_pos.y as usize][new_pos.x as usize] != '#' {
+            if grid[new_pos] != '#' {
                 pos = new_pos;
                 break;
             }
@@ -45,31 +32,27 @@ pub fn part1(grid: &Grid) -> usize {
 }
 
 pub fn part2(grid: &Grid) -> usize {
-    let rows = grid.len();
-    let cols = grid[0].len();
-    let original_pos = find_guard(grid);
+    let original_pos = grid.find(&'^').unwrap();
 
     let mut pos = original_pos;
     let mut dir = UP;
+
     let mut path = HashSet::new();
     'outer: loop {
         path.insert(pos);
         loop {
             let new_pos = pos + dir;
-            if new_pos.y < 0
-                || new_pos.y >= rows as i32
-                || new_pos.x < 0
-                || new_pos.x >= cols as i32
-            {
+            if !grid.contains(new_pos) {
                 break 'outer;
             }
-            if grid[new_pos.y as usize][new_pos.x as usize] != '#' {
+            if grid[new_pos] != '#' {
                 pos = new_pos;
                 break;
             }
             dir.rotate_clockwise();
         }
     }
+    path.len();
     path.remove(&original_pos);
 
     let path_vec: Vec<_> = path.into_iter().collect();
@@ -85,7 +68,7 @@ pub fn part2(grid: &Grid) -> usize {
             thread::spawn(move || {
                 let mut local_count = 0;
                 for obstacle_pos in chunk {
-                    grid[obstacle_pos.y as usize][obstacle_pos.x as usize] = '#';
+                    grid[obstacle_pos] = '#';
 
                     let mut pos = original_pos;
                     let mut dir = UP;
@@ -98,14 +81,10 @@ pub fn part2(grid: &Grid) -> usize {
                         }
                         loop {
                             let new_pos = pos + dir;
-                            if new_pos.y < 0
-                                || new_pos.y >= rows as i32
-                                || new_pos.x < 0
-                                || new_pos.x >= cols as i32
-                            {
+                            if !grid.contains(new_pos) {
                                 break 'outer;
                             }
-                            if grid[new_pos.y as usize][new_pos.x as usize] != '#' {
+                            if grid[new_pos] != '#' {
                                 pos = new_pos;
                                 break;
                             }
@@ -113,7 +92,7 @@ pub fn part2(grid: &Grid) -> usize {
                         }
                     }
 
-                    grid[obstacle_pos.y as usize][obstacle_pos.x as usize] = '.';
+                    grid[obstacle_pos] = '.';
                 }
                 local_count
             })
@@ -124,15 +103,4 @@ pub fn part2(grid: &Grid) -> usize {
         .into_iter()
         .map(|handle| handle.join().unwrap())
         .sum()
-}
-
-fn find_guard(grid: &Grid) -> Point {
-    for (i, line) in grid.iter().enumerate() {
-        for (j, c) in line.iter().enumerate() {
-            if c == &'^' {
-                return Point::new(j as i32, i as i32);
-            }
-        }
-    }
-    unreachable!()
 }
