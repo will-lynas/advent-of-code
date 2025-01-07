@@ -4,6 +4,7 @@
 // TODO: enable these two again
 #![allow(clippy::cast_sign_loss)]
 #![allow(clippy::cast_possible_wrap)]
+#![allow(clippy::cast_possible_truncation)]
 
 pub mod utils;
 

@@ -3,9 +3,9 @@ use std::{
     thread::{self, available_parallelism},
 };
 
-type Grid = Vec<Vec<char>>;
+use crate::utils::point::{Point, DIRS};
 
-const DIRS: [(isize, isize); 4] = [(-1, 0), (0, 1), (1, 0), (0, -1)];
+type Grid = Vec<Vec<char>>;
 
 pub fn parse(input: &str) -> Grid {
     input
@@ -19,20 +19,23 @@ pub fn part1(grid: &Grid) -> usize {
     let rows = grid.len();
     let cols = grid[0].len();
 
-    let (mut x, mut y) = find_guard(grid);
+    let mut pos = find_guard(grid);
     let mut di = 0;
 
     let mut visited = HashSet::new();
     'outer: loop {
-        visited.insert((x, y));
+        visited.insert(pos);
         loop {
-            let (dx, dy) = DIRS[di];
-            let (tx, ty) = (x as isize + dx, y as isize + dy);
-            if tx < 0 || tx >= rows as isize || ty < 0 || ty >= cols as isize {
+            let new_pos = pos + DIRS[di];
+            if new_pos.y < 0
+                || new_pos.y >= rows as i32
+                || new_pos.x < 0
+                || new_pos.x >= cols as i32
+            {
                 break 'outer;
             }
-            if grid[tx as usize][ty as usize] != '#' {
-                (x, y) = (tx as usize, ty as usize);
+            if grid[new_pos.y as usize][new_pos.x as usize] != '#' {
+                pos = new_pos;
                 break;
             }
             di += 1;
@@ -45,28 +48,31 @@ pub fn part1(grid: &Grid) -> usize {
 pub fn part2(grid: &Grid) -> usize {
     let rows = grid.len();
     let cols = grid[0].len();
-    let (gx, gy) = find_guard(grid);
+    let original_pos = find_guard(grid);
 
-    let (mut x, mut y) = (gx, gy);
+    let mut pos = original_pos;
     let mut di = 0;
     let mut path = HashSet::new();
     'outer: loop {
-        path.insert((x, y));
+        path.insert(pos);
         loop {
-            let (dx, dy) = DIRS[di];
-            let (tx, ty) = (x as isize + dx, y as isize + dy);
-            if tx < 0 || tx >= rows as isize || ty < 0 || ty >= cols as isize {
+            let new_pos = pos + DIRS[di];
+            if new_pos.y < 0
+                || new_pos.y >= rows as i32
+                || new_pos.x < 0
+                || new_pos.x >= cols as i32
+            {
                 break 'outer;
             }
-            if grid[tx as usize][ty as usize] != '#' {
-                (x, y) = (tx as usize, ty as usize);
+            if grid[new_pos.y as usize][new_pos.x as usize] != '#' {
+                pos = new_pos;
                 break;
             }
             di += 1;
             di %= 4;
         }
     }
-    path.remove(&(gx, gy));
+    path.remove(&original_pos);
 
     let path_vec: Vec<_> = path.into_iter().collect();
     let threads: usize = available_parallelism().unwrap().into();
@@ -80,26 +86,29 @@ pub fn part2(grid: &Grid) -> usize {
             let mut grid = grid.clone();
             thread::spawn(move || {
                 let mut local_count = 0;
-                for (ox, oy) in chunk {
-                    grid[ox][oy] = '#';
+                for obstacle_pos in chunk {
+                    grid[obstacle_pos.y as usize][obstacle_pos.x as usize] = '#';
 
-                    let (mut x, mut y) = (gx, gy);
+                    let mut pos = original_pos;
                     let mut di = 0;
 
                     let mut visited = HashSet::new();
                     'outer: loop {
-                        if !visited.insert((x, y, di)) {
+                        if !visited.insert((pos, di)) {
                             local_count += 1;
                             break;
                         }
                         loop {
-                            let (dx, dy) = DIRS[di];
-                            let (tx, ty) = (x as isize + dx, y as isize + dy);
-                            if tx < 0 || tx >= rows as isize || ty < 0 || ty >= cols as isize {
+                            let new_pos = pos + DIRS[di];
+                            if new_pos.y < 0
+                                || new_pos.y >= rows as i32
+                                || new_pos.x < 0
+                                || new_pos.x >= cols as i32
+                            {
                                 break 'outer;
                             }
-                            if grid[tx as usize][ty as usize] != '#' {
-                                (x, y) = (tx as usize, ty as usize);
+                            if grid[new_pos.y as usize][new_pos.x as usize] != '#' {
+                                pos = new_pos;
                                 break;
                             }
                             di += 1;
@@ -107,7 +116,7 @@ pub fn part2(grid: &Grid) -> usize {
                         }
                     }
 
-                    grid[ox][oy] = '.';
+                    grid[obstacle_pos.y as usize][obstacle_pos.x as usize] = '.';
                 }
                 local_count
             })
@@ -120,11 +129,11 @@ pub fn part2(grid: &Grid) -> usize {
         .sum()
 }
 
-fn find_guard(grid: &Grid) -> (usize, usize) {
+fn find_guard(grid: &Grid) -> Point {
     for (i, line) in grid.iter().enumerate() {
         for (j, c) in line.iter().enumerate() {
             if c == &'^' {
-                return (i, j);
+                return Point::new(j as i32, i as i32);
             }
         }
     }
