@@ -10,7 +10,7 @@ pub fn parse(input: &str) -> Input {
 
     let mut rules_map = HashMap::new();
     for line in parts.next().unwrap().lines() {
-        let mut line_parts = line.split("|").map(|n| n.parse::<u32>().unwrap());
+        let mut line_parts = line.split('|').map(|n| n.parse::<u32>().unwrap());
         rules_map
             .entry(line_parts.next().unwrap())
             .or_insert_with(HashSet::new)
@@ -21,7 +21,7 @@ pub fn parse(input: &str) -> Input {
         .next()
         .unwrap()
         .lines()
-        .map(|line| line.split(",").map(|n| n.parse::<u32>().unwrap()).collect())
+        .map(|line| line.split(',').map(|n| n.parse::<u32>().unwrap()).collect())
         .collect();
 
     (rules_map, updates)
