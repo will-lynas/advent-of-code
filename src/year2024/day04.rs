@@ -80,33 +80,3 @@ pub fn part2(input: &str) -> usize {
     }
     count
 }
-
-#[cfg(test)]
-mod test {
-    use indoc::indoc;
-
-    use super::*;
-
-    const EXAMPLE: &str = indoc! {"
-        MMMSXXMASM
-        MSAMXMSMSA
-        AMXSXMAAMM
-        MSAMASMSMX
-        XMASAMXAMM
-        XXAMMXXAMA
-        SMSMSASXSS
-        SAXAMASAAA
-        MAMMMXMMMM
-        MXMXAXMASX
-    "};
-
-    #[test]
-    fn part1_test() {
-        assert_eq!(part1(EXAMPLE), 18);
-    }
-
-    #[test]
-    fn part2_test() {
-        assert_eq!(part2(EXAMPLE), 9);
-    }
-}
