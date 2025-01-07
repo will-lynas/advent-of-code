@@ -61,4 +61,7 @@ year2024 day04
 
 ## Acknowledgments
 
-Thank you to [maneatingape/advent-of-code-rust](https://github.com/maneatingape/advent-of-code-rust) for the structure of this repo
+Thank you to ...
+
+- [maneatingape/advent-of-code-rust](https://github.com/maneatingape/advent-of-code-rust) for the structure of this repo, and for large parts of the solutions
+- [Neil Thistlethwaite](https://www.youtube.com/@nthistlethwaite) for his amazing live Advent of Code solutions on YouTube
