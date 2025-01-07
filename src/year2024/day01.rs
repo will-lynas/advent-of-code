@@ -11,8 +11,8 @@ pub fn parse(input: &str) -> Lists {
         left.push(nums.next().unwrap().parse().unwrap());
         right.push(nums.next().unwrap().parse().unwrap());
     }
-    left.sort();
-    right.sort();
+    left.sort_unstable();
+    right.sort_unstable();
     (left, right)
 }
 
