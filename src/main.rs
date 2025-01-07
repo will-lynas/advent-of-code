@@ -1,6 +1,4 @@
-#![feature(test)]
-extern crate test;
-
+use advent_of_code::utils::ansi::*;
 use clap::Parser;
 use std::{
     fs::read_to_string,
@@ -8,12 +6,6 @@ use std::{
     path::{Path, PathBuf},
     time::{Duration, Instant},
 };
-use utils::ansi::*;
-
-pub mod utils;
-
-pub mod year2015;
-pub mod year2024;
 
 #[derive(Parser, Debug)]
 struct Args {
@@ -81,7 +73,7 @@ macro_rules! run {
                 let path = Path::new("input").join(year).join(day).with_extension("txt");
 
                 let wrapper = |data: String| {
-                    use $year::$day::*;
+                    use advent_of_code::$year::$day::*;
 
                     let part1 = part1(&data);
                     let part2 = part2(&data);
