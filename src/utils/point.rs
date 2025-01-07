@@ -14,13 +14,10 @@ pub struct Point {
 }
 
 impl Point {
-    #[must_use]
-    #[inline]
     pub const fn new(x: i32, y: i32) -> Self {
         Self { x, y }
     }
 
-    #[inline]
     pub fn rotate_clockwise(&mut self) {
         (self.x, self.y) = (-self.y, self.x);
     }
@@ -29,8 +26,6 @@ impl Point {
 impl Add for Point {
     type Output = Point;
 
-    #[must_use]
-    #[inline]
     fn add(self, rhs: Self) -> Self {
         Self::new(self.x + rhs.x, self.y + rhs.y)
     }
