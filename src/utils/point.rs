@@ -1,4 +1,7 @@
-use std::ops::{Add, AddAssign};
+use std::ops::{
+    Add,
+    AddAssign,
+};
 
 pub const UP: Point = Point::new(0, -1);
 pub const DOWN: Point = Point::new(0, 1);

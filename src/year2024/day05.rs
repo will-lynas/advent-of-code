@@ -1,6 +1,9 @@
 use std::{
     cmp::Ordering,
-    collections::{HashMap, HashSet},
+    collections::{
+        HashMap,
+        HashSet,
+    },
 };
 
 type Input = (HashMap<u32, HashSet<u32>>, Vec<Vec<u32>>);

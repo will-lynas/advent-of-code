@@ -1,7 +1,17 @@
-use gxhash::{HashSet, HashSetExt};
-use std::thread::{self, available_parallelism};
+use std::thread::{
+    self,
+    available_parallelism,
+};
 
-use crate::utils::{grid::Grid, point::UP};
+use gxhash::{
+    HashSet,
+    HashSetExt,
+};
+
+use crate::utils::{
+    grid::Grid,
+    point::UP,
+};
 
 pub fn parse(input: &str) -> Grid<u8> {
     Grid::parse(input)

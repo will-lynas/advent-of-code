@@ -1,11 +1,18 @@
-use advent_of_code::utils::ansi::*;
-use clap::Parser;
 use std::{
     fs::read_to_string,
     iter::empty,
-    path::{Path, PathBuf},
-    time::{Duration, Instant},
+    path::{
+        Path,
+        PathBuf,
+    },
+    time::{
+        Duration,
+        Instant,
+    },
 };
+
+use advent_of_code::utils::ansi::*;
+use clap::Parser;
 
 #[derive(Parser, Debug)]
 struct Args {
