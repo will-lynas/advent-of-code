@@ -27,3 +27,7 @@ macro_rules! test {
 test!(year2024
     day01, day02, day03, day04, day05, day06
 );
+
+test!(year2015
+    day01
+);

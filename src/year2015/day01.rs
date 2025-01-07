@@ -27,18 +27,3 @@ pub fn part2(input: &str) -> usize {
 
     unreachable!()
 }
-
-#[cfg(test)]
-mod test {
-    use super::*;
-
-    #[test]
-    fn part1_test() {
-        assert_eq!(part1("))((((("), 3);
-    }
-
-    #[test]
-    fn part2_test() {
-        assert_eq!(part2("()())"), 5);
-    }
-}
