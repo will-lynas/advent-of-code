@@ -1,3 +1,6 @@
+#![feature(test)]
+extern crate test;
+
 use clap::Parser;
 use std::{
     fs::read_to_string,

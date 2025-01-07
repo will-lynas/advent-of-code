@@ -138,9 +138,12 @@ pub fn part2(input: &str) -> usize {
 
 #[cfg(test)]
 mod test {
+    use std::{fs::read_to_string, path::Path};
+
     use indoc::indoc;
 
     use super::*;
+    use ::test::Bencher;
 
     const EXAMPLE: &str = indoc! {"
         ....#.....
@@ -163,5 +166,15 @@ mod test {
     #[test]
     fn part2_test() {
         assert_eq!(part2(EXAMPLE), 6);
+    }
+
+    #[bench]
+    fn part2_bench(b: &mut Bencher) {
+        let path = Path::new("input")
+            .join("year2024")
+            .join("day06")
+            .with_extension("txt");
+        let input = read_to_string(path).unwrap();
+        b.iter(|| part2(&input));
     }
 }
