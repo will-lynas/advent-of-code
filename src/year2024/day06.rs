@@ -15,17 +15,6 @@ pub fn parse(input: &str) -> Grid {
         .collect()
 }
 
-fn find_guard(grid: &Grid) -> (usize, usize) {
-    for (i, line) in grid.iter().enumerate() {
-        for (j, c) in line.iter().enumerate() {
-            if c == &'^' {
-                return (i, j);
-            }
-        }
-    }
-    unreachable!()
-}
-
 pub fn part1(grid: &Grid) -> usize {
     let rows = grid.len();
     let cols = grid[0].len();
@@ -132,4 +121,15 @@ pub fn part2(grid: &Grid) -> usize {
         .into_iter()
         .map(|handle| handle.join().unwrap())
         .sum()
+}
+
+fn find_guard(grid: &Grid) -> (usize, usize) {
+    for (i, line) in grid.iter().enumerate() {
+        for (j, c) in line.iter().enumerate() {
+            if c == &'^' {
+                return (i, j);
+            }
+        }
+    }
+    unreachable!()
 }
