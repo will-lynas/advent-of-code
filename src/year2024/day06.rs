@@ -14,20 +14,15 @@ pub fn part1(grid: &Grid<u8>) -> usize {
     let mut dir = UP;
 
     let mut visited = HashSet::new();
-    'outer: loop {
-        visited.insert(pos);
-        loop {
-            let new_pos = pos + dir;
-            if !grid.contains(new_pos) {
-                break 'outer;
-            }
-            if grid[new_pos] != b'#' {
-                pos = new_pos;
-                break;
-            }
+    while grid.contains(pos + dir) {
+        if grid[pos + dir] == b'#' {
             dir.rotate_clockwise();
+            continue;
         }
+        visited.insert(pos);
+        pos += dir;
     }
+    visited.insert(pos);
     visited.len()
 }
 
@@ -37,25 +32,19 @@ pub fn part2(grid: &Grid<u8>) -> usize {
     let mut pos = original_pos;
     let mut dir = UP;
 
-    let mut path = HashSet::new();
-    'outer: loop {
-        path.insert(pos);
-        loop {
-            let new_pos = pos + dir;
-            if !grid.contains(new_pos) {
-                break 'outer;
-            }
-            if grid[new_pos] != b'#' {
-                pos = new_pos;
-                break;
-            }
+    let mut visited = HashSet::new();
+    while grid.contains(pos + dir) {
+        if grid[pos + dir] == b'#' {
             dir.rotate_clockwise();
+            continue;
         }
+        visited.insert(pos);
+        pos += dir;
     }
-    path.len();
-    path.remove(&original_pos);
+    visited.insert(pos);
+    visited.remove(&original_pos);
 
-    let path_vec: Vec<_> = path.into_iter().collect();
+    let path_vec: Vec<_> = visited.into_iter().collect();
     let threads: usize = available_parallelism().unwrap().into();
     let chunk_size = path_vec.len().div_ceil(threads);
 
