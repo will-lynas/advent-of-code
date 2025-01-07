@@ -5,12 +5,12 @@ use std::{
 
 use crate::utils::{grid::Grid, point::UP};
 
-pub fn parse(input: &str) -> Grid {
+pub fn parse(input: &str) -> Grid<u8> {
     Grid::parse(input)
 }
 
-pub fn part1(grid: &Grid) -> usize {
-    let mut pos = grid.find(&'^').unwrap();
+pub fn part1(grid: &Grid<u8>) -> usize {
+    let mut pos = grid.find(&b'^').unwrap();
     let mut dir = UP;
 
     let mut visited = HashSet::new();
@@ -21,7 +21,7 @@ pub fn part1(grid: &Grid) -> usize {
             if !grid.contains(new_pos) {
                 break 'outer;
             }
-            if grid[new_pos] != '#' {
+            if grid[new_pos] != b'#' {
                 pos = new_pos;
                 break;
             }
@@ -31,8 +31,8 @@ pub fn part1(grid: &Grid) -> usize {
     visited.len()
 }
 
-pub fn part2(grid: &Grid) -> usize {
-    let original_pos = grid.find(&'^').unwrap();
+pub fn part2(grid: &Grid<u8>) -> usize {
+    let original_pos = grid.find(&b'^').unwrap();
 
     let mut pos = original_pos;
     let mut dir = UP;
@@ -45,7 +45,7 @@ pub fn part2(grid: &Grid) -> usize {
             if !grid.contains(new_pos) {
                 break 'outer;
             }
-            if grid[new_pos] != '#' {
+            if grid[new_pos] != b'#' {
                 pos = new_pos;
                 break;
             }
@@ -68,7 +68,7 @@ pub fn part2(grid: &Grid) -> usize {
             thread::spawn(move || {
                 let mut local_count = 0;
                 for obstacle_pos in chunk {
-                    grid[obstacle_pos] = '#';
+                    grid[obstacle_pos] = b'#';
 
                     let mut pos = original_pos;
                     let mut dir = UP;
@@ -84,7 +84,7 @@ pub fn part2(grid: &Grid) -> usize {
                             if !grid.contains(new_pos) {
                                 break 'outer;
                             }
-                            if grid[new_pos] != '#' {
+                            if grid[new_pos] != b'#' {
                                 pos = new_pos;
                                 break;
                             }
@@ -92,7 +92,7 @@ pub fn part2(grid: &Grid) -> usize {
                         }
                     }
 
-                    grid[obstacle_pos] = '.';
+                    grid[obstacle_pos] = b'.';
                 }
                 local_count
             })
