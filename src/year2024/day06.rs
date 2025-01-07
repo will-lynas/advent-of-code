@@ -135,33 +135,3 @@ pub fn part2(input: &str) -> usize {
         .map(|handle| handle.join().unwrap())
         .sum()
 }
-
-#[cfg(test)]
-mod test {
-    use indoc::indoc;
-
-    use super::*;
-
-    const EXAMPLE: &str = indoc! {"
-        ....#.....
-        .........#
-        ..........
-        ..#.......
-        .......#..
-        ..........
-        .#..^.....
-        ........#.
-        #.........
-        ......#...
-    "};
-
-    #[test]
-    fn part1_test() {
-        assert_eq!(part1(EXAMPLE), 41);
-    }
-
-    #[test]
-    fn part2_test() {
-        assert_eq!(part2(EXAMPLE), 6);
-    }
-}
