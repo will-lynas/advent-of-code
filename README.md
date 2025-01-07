@@ -6,58 +6,31 @@ My solutions to [Advent of Code](https://adventofcode.com/) written in Rust
 
 ## Running the code
 
-### Running against the examples
+### Inputs
 
-These are the small examples given in the text of the problem
+Inputs should be placed in the path `input/yearXXXX/dayYY.txt`
 
-Everything:
+### Solutions
 
-```
-cargo test
-```
+- Run everything: `cargo run`
+- Specific year: `cargo run year2024`
+- Specific day: `cargo run year2024 day04`
 
-Specific year:
+### Examples
 
-```
-cargo test year2024
-```
+The examples given in the text of each problem are used in tests.
 
-Specific day:
+- Run everything: `cargo test`
+- Specific year: `cargo test year2024`
+- Specific day: `cargo test year2024::day04`
+- Specific part: `cargo test year2024::day04::part2`
 
-```
-cargo test year2024::day04
-```
+### Benchmarks
 
-### Running against puzzle inputs
-
-First, place the relevant puzzle inputs in the path `input/yearXXXX/dayYY.txt`
-
-To run everything:
-
-```
-cargo run
-```
-
-Specific year:
-
-```
-cargo run year2024
-```
-
-Specific day:
-
-```
-cargo run year2024 day04
-```
-
-The output should look something like this:
-
-```
-year2024 day04
-    Part 1: 2517
-    Part 2: 1960
-🕓 7 ms
-```
+- Everything: `cargo bench`
+- Specific year: `cargo bench year2024`
+- Specific day: `cargo bench year2024::day04`
+- Specific part: `cargo bench year2024::day04::part2`
 
 ## Acknowledgments
 
