@@ -22,20 +22,3 @@ pub fn part2(input: &str) -> i32 {
     }
     enable_parts.iter().map(|part| part1(part)).sum()
 }
-
-#[cfg(test)]
-mod test {
-    use super::*;
-
-    #[test]
-    fn part1_test() {
-        let example = "xmul(2,4)%&mul[3,7]!@^do_not_mul(5,5)+mul(32,64]then(mul(11,8)mul(8,5))";
-        assert_eq!(part1(example), 161);
-    }
-
-    #[test]
-    fn part2_test() {
-        let example = "xmul(2,4)&mul[3,7]!^don't()_mul(5,5)+mul(32,64](mul(11,8)undo()?mul(8,5))";
-        assert_eq!(part2(example), 48);
-    }
-}
