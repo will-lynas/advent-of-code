@@ -3,7 +3,7 @@ use std::{
     thread::{self, available_parallelism},
 };
 
-use crate::utils::point::{Point, DIRS};
+use crate::utils::point::{Point, UP};
 
 type Grid = Vec<Vec<char>>;
 
@@ -20,13 +20,13 @@ pub fn part1(grid: &Grid) -> usize {
     let cols = grid[0].len();
 
     let mut pos = find_guard(grid);
-    let mut di = 0;
+    let mut dir = UP;
 
     let mut visited = HashSet::new();
     'outer: loop {
         visited.insert(pos);
         loop {
-            let new_pos = pos + DIRS[di];
+            let new_pos = pos + dir;
             if new_pos.y < 0
                 || new_pos.y >= rows as i32
                 || new_pos.x < 0
@@ -38,8 +38,7 @@ pub fn part1(grid: &Grid) -> usize {
                 pos = new_pos;
                 break;
             }
-            di += 1;
-            di %= 4;
+            dir.rotate_clockwise();
         }
     }
     visited.len()
@@ -51,12 +50,12 @@ pub fn part2(grid: &Grid) -> usize {
     let original_pos = find_guard(grid);
 
     let mut pos = original_pos;
-    let mut di = 0;
+    let mut dir = UP;
     let mut path = HashSet::new();
     'outer: loop {
         path.insert(pos);
         loop {
-            let new_pos = pos + DIRS[di];
+            let new_pos = pos + dir;
             if new_pos.y < 0
                 || new_pos.y >= rows as i32
                 || new_pos.x < 0
@@ -68,8 +67,7 @@ pub fn part2(grid: &Grid) -> usize {
                 pos = new_pos;
                 break;
             }
-            di += 1;
-            di %= 4;
+            dir.rotate_clockwise();
         }
     }
     path.remove(&original_pos);
@@ -90,16 +88,16 @@ pub fn part2(grid: &Grid) -> usize {
                     grid[obstacle_pos.y as usize][obstacle_pos.x as usize] = '#';
 
                     let mut pos = original_pos;
-                    let mut di = 0;
+                    let mut dir = UP;
 
                     let mut visited = HashSet::new();
                     'outer: loop {
-                        if !visited.insert((pos, di)) {
+                        if !visited.insert((pos, dir)) {
                             local_count += 1;
                             break;
                         }
                         loop {
-                            let new_pos = pos + DIRS[di];
+                            let new_pos = pos + dir;
                             if new_pos.y < 0
                                 || new_pos.y >= rows as i32
                                 || new_pos.x < 0
@@ -111,8 +109,7 @@ pub fn part2(grid: &Grid) -> usize {
                                 pos = new_pos;
                                 break;
                             }
-                            di += 1;
-                            di %= 4;
+                            dir.rotate_clockwise();
                         }
                     }
 

@@ -19,6 +19,11 @@ impl Point {
     pub const fn new(x: i32, y: i32) -> Self {
         Self { x, y }
     }
+
+    #[inline]
+    pub fn rotate_clockwise(&mut self) {
+        (self.x, self.y) = (-self.y, self.x);
+    }
 }
 
 impl Add for Point {
