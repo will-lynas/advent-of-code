@@ -20,12 +20,18 @@ macro_rules! benchmark {
 
                 #[bench]
                 fn part1(b: &mut Bencher) {
-                    b.iter(|| solution::part1(&INPUT));
+                    b.iter(|| {
+                        let input = solution::parse(&INPUT);
+                        solution::part1(&input)
+                    });
                 }
 
                 #[bench]
                 fn part2(b: &mut Bencher) {
-                    b.iter(|| solution::part2(&INPUT));
+                    b.iter(|| {
+                        let input = solution::parse(&INPUT);
+                        solution::part2(&input)
+                    });
                 }
             }
         )*}
