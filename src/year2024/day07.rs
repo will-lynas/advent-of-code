@@ -35,6 +35,30 @@ pub fn part1(lines: &[Line]) -> u64 {
         .sum()
 }
 
-pub fn part2(_lines: &[Line]) -> usize {
-    0
+fn valid2(goal: u64, current: u64, nums: &[u64]) -> bool {
+    if nums.is_empty() {
+        return goal == current;
+    }
+    let first = nums.first().unwrap();
+    let nums = &nums[1..nums.len()];
+    valid2(goal, current + first, nums)
+        || valid2(goal, current * first, nums)
+        || valid2(
+            goal,
+            (current.to_string() + &first.to_string()).parse().unwrap(),
+            nums,
+        )
+}
+
+pub fn part2(lines: &[Line]) -> u64 {
+    lines
+        .iter()
+        .filter_map(|line| {
+            if valid2(line.0, 0, &line.1) {
+                Some(line.0)
+            } else {
+                None
+            }
+        })
+        .sum()
 }
