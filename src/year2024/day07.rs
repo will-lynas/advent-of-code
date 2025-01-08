@@ -13,26 +13,20 @@ pub fn parse(input: &str) -> Vec<Line> {
         .collect()
 }
 
-fn valid(goal: u64, nums: &[u64]) -> bool {
-    if nums.len() == 1 {
-        return goal == nums[0];
+fn valid(goal: u64, current: u64, nums: &[u64]) -> bool {
+    if nums.is_empty() {
+        return goal == current;
     }
-    let last = nums.last().unwrap();
-    let nums = &nums[0..nums.len() - 1];
-    if &goal >= last && valid(goal - last, nums) {
-        return true;
-    }
-    if goal % last == 0 && valid(goal / last, nums) {
-        return true;
-    }
-    false
+    let first = nums.first().unwrap();
+    let nums = &nums[1..nums.len()];
+    valid(goal, current + first, nums) || valid(goal, current * first, nums)
 }
 
 pub fn part1(lines: &[Line]) -> u64 {
     lines
         .iter()
         .filter_map(|line| {
-            if valid(line.0, &line.1) {
+            if valid(line.0, 0, &line.1) {
                 Some(line.0)
             } else {
                 None
