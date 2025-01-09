@@ -1,8 +1,3 @@
-use std::thread::{
-    self,
-    available_parallelism,
-};
-
 use gxhash::{
     HashSet,
     HashSetExt,
@@ -11,6 +6,7 @@ use gxhash::{
 use crate::utils::{
     grid::Grid,
     point::UP,
+    threading::run_threads,
 };
 
 pub fn parse(input: &str) -> Grid<u8> {
@@ -53,45 +49,33 @@ pub fn part2(grid: &Grid<u8>) -> usize {
     visited.remove(&original_pos);
 
     let path_vec: Vec<_> = visited.into_iter().collect();
-    let threads: usize = available_parallelism().unwrap().into();
-    let chunk_size = path_vec.len().div_ceil(threads);
+    let fun = |chunk| {
+        let mut grid = grid.clone();
+        let mut local_count = 0;
+        for obstacle_pos in chunk {
+            grid[obstacle_pos] = b'#';
 
-    let path_chunks: Vec<_> = path_vec.chunks(chunk_size).map(<[_]>::to_vec).collect();
+            let mut pos = original_pos;
+            let mut dir = UP;
 
-    let handles: Vec<_> = path_chunks
-        .into_iter()
-        .map(|chunk| {
-            let mut grid = grid.clone();
-            thread::spawn(move || {
-                let mut local_count = 0;
-                for obstacle_pos in chunk {
-                    grid[obstacle_pos] = b'#';
-
-                    let mut pos = original_pos;
-                    let mut dir = UP;
-
-                    let mut visited = HashSet::new();
-                    while grid.contains(pos + dir) {
-                        if grid[pos + dir] == b'#' {
-                            dir.rotate_clockwise();
-                            continue;
-                        }
-                        if !visited.insert((pos, dir)) {
-                            local_count += 1;
-                            break;
-                        }
-                        pos += dir;
-                    }
-
-                    grid[obstacle_pos] = b'.';
+            let mut visited = HashSet::new();
+            while grid.contains(pos + dir) {
+                if grid[pos + dir] == b'#' {
+                    dir.rotate_clockwise();
+                    continue;
                 }
-                local_count
-            })
-        })
-        .collect();
+                if !visited.insert((pos, dir)) {
+                    local_count += 1;
+                    break;
+                }
+                pos += dir;
+            }
 
-    handles
-        .into_iter()
-        .map(|handle| handle.join().unwrap())
-        .sum()
+            grid[obstacle_pos] = b'.';
+        }
+        local_count
+    };
+
+    let results = run_threads(path_vec, fun);
+    results.iter().sum()
 }
