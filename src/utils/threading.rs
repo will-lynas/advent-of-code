@@ -9,20 +9,8 @@ where
     T: Send,
     U: Send,
 {
-    let chunk_size = inputs.len().div_ceil(threads());
-    let chunks = inputs
-        .into_iter()
-        .enumerate()
-        .fold(Vec::new(), |mut chunks, (i, item)| {
-            if i % chunk_size == 0 {
-                chunks.push(Vec::new());
-            }
-            chunks.last_mut().unwrap().push(item);
-            chunks
-        });
-
     scope(|s| {
-        let handles: Vec<_> = chunks
+        let handles: Vec<_> = chunks(inputs)
             .into_iter()
             .map(|chunk| s.spawn(move || fun(chunk)))
             .collect();
@@ -31,6 +19,20 @@ where
             .map(|handle| handle.join().unwrap())
             .collect()
     })
+}
+
+fn chunks<T>(inputs: Vec<T>) -> Vec<Vec<T>> {
+    let chunk_size = inputs.len().div_ceil(threads());
+    inputs
+        .into_iter()
+        .enumerate()
+        .fold(Vec::new(), |mut chunks, (i, item)| {
+            if i % chunk_size == 0 {
+                chunks.push(Vec::new());
+            }
+            chunks.last_mut().unwrap().push(item);
+            chunks
+        })
 }
 
 fn threads() -> usize {
