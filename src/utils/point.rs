@@ -1,6 +1,7 @@
 use std::ops::{
     Add,
     AddAssign,
+    Sub,
 };
 
 pub const UP: Point = Point::new(0, -1);
@@ -31,6 +32,14 @@ impl Add for Point {
 
     fn add(self, rhs: Self) -> Self {
         Self::new(self.x + rhs.x, self.y + rhs.y)
+    }
+}
+
+impl Sub for Point {
+    type Output = Point;
+
+    fn sub(self, rhs: Self) -> Self {
+        Self::new(self.x - rhs.x, self.y - rhs.y)
     }
 }
 
