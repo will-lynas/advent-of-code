@@ -1,6 +1,13 @@
-use std::ops::{
-    Index,
-    IndexMut,
+use std::{
+    fmt::{
+        self,
+        Debug,
+        Formatter,
+    },
+    ops::{
+        Index,
+        IndexMut,
+    },
 };
 
 use super::point::Point;
@@ -24,6 +31,18 @@ impl Grid<u8> {
             height,
             body,
         }
+    }
+}
+
+impl Debug for Grid<u8> {
+    fn fmt(&self, f: &mut Formatter<'_>) -> fmt::Result {
+        for y in 0..self.height {
+            for x in 0..self.width {
+                write!(f, "{}", self[Point::new(x, y)] as char)?;
+            }
+            writeln!(f)?;
+        }
+        Ok(())
     }
 }
 
