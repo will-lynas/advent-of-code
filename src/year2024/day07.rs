@@ -25,16 +25,19 @@ fn valid(goal: u64, current: u64, nums: &[u64]) -> bool {
 }
 
 pub fn part1(lines: &[Line]) -> u64 {
-    lines
-        .iter()
-        .filter_map(|line| {
-            if valid(line.0, 0, &line.1) {
-                Some(line.0)
-            } else {
-                None
-            }
-        })
-        .sum()
+    let fun = |chunk: Vec<Line>| {
+        chunk
+            .iter()
+            .filter_map(|line| {
+                if valid(line.0, 0, &line.1) {
+                    Some(line.0)
+                } else {
+                    None
+                }
+            })
+            .sum::<u64>()
+    };
+    run_threads(lines.to_vec(), fun).into_iter().sum()
 }
 
 fn valid2(goal: u64, current: u64, nums: &[u64]) -> bool {
