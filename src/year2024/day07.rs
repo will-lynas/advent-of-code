@@ -1,3 +1,5 @@
+use crate::utils::threading::run_threads;
+
 type Line = (u64, Vec<u64>);
 
 pub fn parse(input: &str) -> Vec<Line> {
@@ -51,14 +53,17 @@ fn valid2(goal: u64, current: u64, nums: &[u64]) -> bool {
 }
 
 pub fn part2(lines: &[Line]) -> u64 {
-    lines
-        .iter()
-        .filter_map(|line| {
-            if valid2(line.0, 0, &line.1) {
-                Some(line.0)
-            } else {
-                None
-            }
-        })
-        .sum()
+    let fun = |chunk: Vec<Line>| {
+        chunk
+            .iter()
+            .filter_map(|line| {
+                if valid2(line.0, 0, &line.1) {
+                    Some(line.0)
+                } else {
+                    None
+                }
+            })
+            .sum::<u64>()
+    };
+    run_threads(lines.to_vec(), fun).into_iter().sum()
 }
