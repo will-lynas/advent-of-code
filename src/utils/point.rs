@@ -10,7 +10,7 @@ pub const RIGHT: Point = Point::new(1, 0);
 
 pub const DIRS: [Point; 4] = [UP, RIGHT, DOWN, LEFT];
 
-#[derive(Hash, Copy, Clone, Eq, PartialEq)]
+#[derive(Hash, Copy, Clone, Eq, PartialEq, Debug)]
 pub struct Point {
     pub x: i32,
     pub y: i32,
