@@ -28,13 +28,7 @@ pub fn part1(lines: &[Line]) -> u64 {
     let fun = |chunk: Vec<Line>| {
         chunk
             .iter()
-            .filter_map(|line| {
-                if valid(line.0, 0, &line.1) {
-                    Some(line.0)
-                } else {
-                    None
-                }
-            })
+            .filter_map(|line| valid(line.0, 0, &line.1).then_some(line.0))
             .sum::<u64>()
     };
     run_threads(lines.to_vec(), fun).into_iter().sum()
@@ -59,13 +53,7 @@ pub fn part2(lines: &[Line]) -> u64 {
     let fun = |chunk: Vec<Line>| {
         chunk
             .iter()
-            .filter_map(|line| {
-                if valid2(line.0, 0, &line.1) {
-                    Some(line.0)
-                } else {
-                    None
-                }
-            })
+            .filter_map(|line| valid2(line.0, 0, &line.1).then_some(line.0))
             .sum::<u64>()
     };
     run_threads(lines.to_vec(), fun).into_iter().sum()
