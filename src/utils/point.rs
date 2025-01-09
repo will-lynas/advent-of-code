@@ -1,6 +1,7 @@
 use std::ops::{
     Add,
     AddAssign,
+    Mul,
     Sub,
 };
 
@@ -40,6 +41,14 @@ impl Sub for Point {
 
     fn sub(self, rhs: Self) -> Self {
         Self::new(self.x - rhs.x, self.y - rhs.y)
+    }
+}
+
+impl Mul<i32> for Point {
+    type Output = Point;
+
+    fn mul(self, n: i32) -> Self {
+        Self::new(self.x * n, self.y * n)
     }
 }
 
