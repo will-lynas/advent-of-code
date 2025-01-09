@@ -48,7 +48,6 @@ pub fn part2(grid: &Grid<u8>) -> usize {
     visited.insert(pos);
     visited.remove(&original_pos);
 
-    let path_vec: Vec<_> = visited.into_iter().collect();
     let fun = |chunk| {
         let mut grid = grid.clone();
         let mut local_count = 0;
@@ -76,6 +75,6 @@ pub fn part2(grid: &Grid<u8>) -> usize {
         local_count
     };
 
-    let results = run_threads(path_vec, fun);
-    results.iter().sum()
+    let path_vec: Vec<_> = visited.into_iter().collect();
+    run_threads(path_vec, fun).iter().sum()
 }
