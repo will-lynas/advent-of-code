@@ -44,6 +44,31 @@ pub fn part1((grid, map): &Input) -> usize {
         .count()
 }
 
-pub fn part2(_input: &Input) -> u64 {
-    0
+pub fn part2((grid, map): &Input) -> usize {
+    let mut antinodes = HashSet::new();
+    for points in map.values() {
+        for p1 in points {
+            for p2 in points {
+                if p1 == p2 {
+                    continue;
+                }
+                let diff = *p1 - *p2;
+                for i in 0.. {
+                    let new = *p1 + diff * i;
+                    if !grid.contains(new) {
+                        break;
+                    }
+                    antinodes.insert(new);
+                }
+                for i in 0.. {
+                    let new = *p2 - diff * i;
+                    if !grid.contains(new) {
+                        break;
+                    }
+                    antinodes.insert(new);
+                }
+            }
+        }
+    }
+    antinodes.len()
 }
