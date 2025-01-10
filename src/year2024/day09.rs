@@ -33,6 +33,56 @@ pub fn part1(input: &[u64]) -> u64 {
         .sum()
 }
 
-pub fn part2(_nums: &[u64]) -> u64 {
-    0
+#[derive(Debug)]
+struct File {
+    number: u64,
+    start: u64,
+    length: u64,
+}
+
+#[derive(Debug)]
+struct Space {
+    start: u64,
+    length: u64,
+}
+
+pub fn part2(input: &[u64]) -> u64 {
+    let mut files = Vec::new();
+    let mut spaces = Vec::new();
+
+    let mut pos = 0;
+    for (i, n) in input.iter().enumerate() {
+        if i % 2 == 0 {
+            files.push(File {
+                number: i as u64 / 2,
+                start: pos,
+                length: *n,
+            });
+        } else {
+            spaces.push(Space {
+                start: pos,
+                length: *n,
+            });
+        }
+        pos += n;
+    }
+
+    for file in files.iter_mut().rev() {
+        for space in &mut spaces {
+            if space.start > file.start {
+                break;
+            }
+            if space.length >= file.length {
+                file.start = space.start;
+                space.length -= file.length;
+                space.start += file.length;
+                break;
+            }
+        }
+    }
+
+    files
+        .iter()
+        .map(|file| file.number * file.length * (2 * file.start + file.length - 1) / 2)
+        .sum()
 }
