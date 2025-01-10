@@ -1,2 +1,4 @@
 /target
-/input
+/input/*
+!/input/template_year/
+!/input/template_year/template_day.txt
