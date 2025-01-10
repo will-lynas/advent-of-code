@@ -29,6 +29,7 @@ fn main() {
         .chain(year2024())
         .filter(|solution| args.year.clone().is_none_or(|y| y == solution.year))
         .filter(|solution| args.day.clone().is_none_or(|d| d == solution.day))
+        .filter(|solution| args.year.is_some() || solution.year != "template_year")
         .collect();
 
     let mut duration = Duration::ZERO;
