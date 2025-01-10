@@ -24,14 +24,14 @@ macro_rules! test {
     }
 }
 
-test!(year2024
-    day01, day02, day03, day04, day05, day06, day07, day08, day09, day10
+test!(template_year
+    template_day
 );
 
 test!(year2015
     day01
 );
 
-test!(template_year
-    template_day
+test!(year2024
+    day01, day02, day03, day04, day05, day06, day07, day08, day09, day10
 );
