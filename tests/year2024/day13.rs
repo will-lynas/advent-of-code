@@ -1,4 +1,4 @@
-use advent_of_code::year2024::day10 as solution;
+use advent_of_code::year2024::day13 as solution;
 
 const EXAMPLE: &str = "Hello, World!";
 
