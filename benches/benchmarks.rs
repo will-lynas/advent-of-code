@@ -15,7 +15,7 @@ macro_rules! benchmark {
                     let year = stringify!($year);
                     let day = stringify!($day);
                     let path = Path::new("input").join(year).join(day).with_extension("txt");
-                    read_to_string(path).unwrap()
+                    read_to_string(&path).expect(&format!("Missing input file! Please place input in {}", &path.display()))
                 });
 
                 #[bench]
