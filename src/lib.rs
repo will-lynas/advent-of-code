@@ -8,5 +8,6 @@
 
 pub mod utils;
 
+pub mod template_year;
 pub mod year2015;
 pub mod year2024;

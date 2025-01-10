@@ -24,6 +24,7 @@ fn main() {
     let args = Args::parse();
 
     let solutions: Vec<_> = empty()
+        .chain(template_year())
         .chain(year2015())
         .chain(year2024())
         .filter(|solution| args.year.clone().is_none_or(|y| y == solution.year))
@@ -94,6 +95,10 @@ macro_rules! run {
         }
     }
 }
+
+run!(template_year
+    template_day
+);
 
 run!(year2015
     day01

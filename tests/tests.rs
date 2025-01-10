@@ -31,3 +31,7 @@ test!(year2024
 test!(year2015
     day01
 );
+
+test!(template_year
+    template_day
+);
