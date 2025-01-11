@@ -40,7 +40,7 @@ pub fn part1((grid, map): &Input) -> usize {
     }
     antinodes
         .into_iter()
-        .filter(|point| grid.contains(point))
+        .filter(|point| grid.contains(*point))
         .count()
 }
 
@@ -55,14 +55,14 @@ pub fn part2((grid, map): &Input) -> usize {
                 let diff = *p1 - *p2;
                 for i in 0.. {
                     let new = *p1 + diff * i;
-                    if !grid.contains(&new) {
+                    if !grid.contains(new) {
                         break;
                     }
                     antinodes.insert(new);
                 }
                 for i in 0.. {
                     let new = *p2 - diff * i;
-                    if !grid.contains(&new) {
+                    if !grid.contains(new) {
                         break;
                     }
                     antinodes.insert(new);
