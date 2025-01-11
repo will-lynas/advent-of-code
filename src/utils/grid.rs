@@ -103,3 +103,44 @@ impl<T> IndexMut<Point> for Grid<T> {
         &mut self.body[(self.width * point.y + point.x) as usize]
     }
 }
+
+impl<'a, T> IntoIterator for &'a Grid<T> {
+    type Item = (Point, &'a T);
+    type IntoIter = GridIter<'a, T>;
+
+    fn into_iter(self) -> Self::IntoIter {
+        Self::IntoIter::new(self)
+    }
+}
+
+pub struct GridIter<'a, T> {
+    grid: &'a Grid<T>,
+    current_index: usize,
+}
+
+impl<'a, T> GridIter<'a, T> {
+    pub fn new(grid: &'a Grid<T>) -> Self {
+        Self {
+            grid,
+            current_index: 0,
+        }
+    }
+}
+
+impl<'a, T> Iterator for GridIter<'a, T> {
+    type Item = (Point, &'a T);
+
+    fn next(&mut self) -> Option<Self::Item> {
+        if self.current_index >= self.grid.body.len() {
+            return None;
+        }
+
+        let x = (self.current_index as i32) % self.grid.width;
+        let y = (self.current_index as i32) / self.grid.width;
+        let point = Point::new(x, y);
+        let value = &self.grid.body[self.current_index];
+
+        self.current_index += 1;
+        Some((point, value))
+    }
+}

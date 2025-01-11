@@ -49,8 +49,8 @@ fn score(grid: &Grid<u8>, point: Point) -> usize {
 pub fn part2(grid: &Input) -> usize {
     let mut counts = grid.zero_grid();
 
-    for point in grid.points() {
-        if grid[point] == b'9' {
+    for (point, val) in grid {
+        if *val == b'9' {
             counts[point] = 1;
         }
     }
