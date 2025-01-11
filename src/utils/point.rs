@@ -69,3 +69,11 @@ impl Mul<i32> for Point {
         Self::new(self.x * n, self.y * n)
     }
 }
+
+impl Mul<usize> for Point {
+    type Output = Point;
+
+    fn mul(self, n: usize) -> Self {
+        Self::new(self.x * n as i32, self.y * n as i32)
+    }
+}
