@@ -63,11 +63,12 @@ impl<T> Grid<T> {
             .collect()
     }
 
-    pub fn adjacent<'a>(&'a self, point: &'a Point) -> impl Iterator<Item = Point> + 'a {
+    pub fn adjacent(&self, point: Point) -> Vec<Point> {
         point
             .adjacent()
             .into_iter()
             .filter(|point| self.contains(point))
+            .collect()
     }
 }
 
