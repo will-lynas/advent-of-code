@@ -59,9 +59,9 @@ pub fn part2(grid: &Input) -> usize {
             }
             counts[point] += grid
                 .adjacent(point)
-                .iter()
-                .filter(|&&point| grid[point] == i + 1 + b'0')
-                .map(|&point| counts[point])
+                .into_iter()
+                .filter(|&point| grid[point] == i + 1 + b'0')
+                .map(|point| counts[point])
                 .sum::<usize>();
         }
     }
