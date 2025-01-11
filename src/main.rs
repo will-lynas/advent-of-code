@@ -18,6 +18,8 @@ use clap::Parser;
 struct Args {
     year: Option<String>,
     day: Option<String>,
+    #[arg(short, long)]
+    quiet: bool,
 }
 
 fn main() {
@@ -49,7 +51,7 @@ fn main() {
             println!("{BOLD}{YELLOW}{year} {day:02}{RESET}");
             println!("    Part 1: {part1}");
             println!("    Part 2: {part2}");
-        } else {
+        } else if !args.quiet {
             eprintln!("{BOLD}{RED}{year} {day:02}{RESET}");
             eprintln!("    Missing input!");
             eprintln!(
