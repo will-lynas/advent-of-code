@@ -18,7 +18,7 @@ pub fn part1(grid: &Grid<u8>) -> usize {
     let mut dir = UP;
 
     let mut visited = HashSet::new();
-    while grid.contains(pos + dir) {
+    while grid.contains(&(pos + dir)) {
         if grid[pos + dir] == b'#' {
             dir.rotate_clockwise();
             continue;
@@ -37,7 +37,7 @@ pub fn part2(grid: &Grid<u8>) -> usize {
     let mut dir = UP;
 
     let mut visited = HashSet::new();
-    while grid.contains(pos + dir) {
+    while grid.contains(&(pos + dir)) {
         if grid[pos + dir] == b'#' {
             dir.rotate_clockwise();
             continue;
@@ -58,7 +58,7 @@ pub fn part2(grid: &Grid<u8>) -> usize {
             let mut dir = UP;
 
             let mut visited = HashSet::new();
-            while grid.contains(pos + dir) {
+            while grid.contains(&(pos + dir)) {
                 if grid[pos + dir] == b'#' {
                     dir.rotate_clockwise();
                     continue;

@@ -53,7 +53,7 @@ impl Debug for Grid<u8> {
 }
 
 impl<T> Grid<T> {
-    pub fn contains(&self, point: Point) -> bool {
+    pub fn contains(&self, point: &Point) -> bool {
         point.y >= 0 && point.y < self.height && point.x >= 0 && point.x < self.width
     }
 
