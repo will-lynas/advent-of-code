@@ -1,84 +1,55 @@
-type Grid = Vec<Vec<char>>;
+use crate::utils::{
+    grid::Grid,
+    point::{
+        DIRS,
+        DOWN_LEFT,
+        DOWN_RIGHT,
+        UP_LEFT,
+        UP_RIGHT,
+    },
+};
 
-pub fn parse(input: &str) -> Grid {
-    input.lines().map(|row| row.chars().collect()).collect()
+pub fn parse(input: &str) -> Grid<u8> {
+    Grid::parse(input)
 }
 
-pub fn part1(grid: &Grid) -> i32 {
-    let rows = grid.len();
-    let cols = grid[0].len();
-
-    let target = "XMAS";
-    let target_len = target.len();
-
-    let directions = [
-        (-1, 0),
-        (-1, 1),
-        (0, 1),
-        (1, 1),
-        (1, 0),
-        (1, -1),
-        (0, -1),
-        (-1, -1),
-    ];
+pub fn part1(grid: &Grid<u8>) -> i32 {
+    let target = "XMAS".as_bytes();
 
     let mut count = 0;
-    for row in 0..rows {
-        for col in 0..cols {
-            if grid[row][col] != target.chars().next().unwrap() {
-                continue;
-            }
-
-            for &(dx, dy) in &directions {
-                let mut matched = true;
-
-                for i in 1..target_len {
-                    let new_row = row as isize + dx * i as isize;
-                    let new_col = col as isize + dy * i as isize;
-
-                    if new_row < 0
-                        || new_row >= rows as isize
-                        || new_col < 0
-                        || new_col >= cols as isize
-                    {
-                        matched = false;
-                        break;
-                    }
-
-                    if grid[new_row as usize][new_col as usize] != target.chars().nth(i).unwrap() {
-                        matched = false;
-                        break;
-                    }
-                }
-
-                if matched {
-                    count += 1;
-                }
-            }
+    for (start, val) in grid {
+        if val != target.iter().next().unwrap() {
+            continue;
         }
-    }
-    count
-}
-
-pub fn part2(grid: &Grid) -> usize {
-    let rows = grid.len();
-    let cols = grid[0].len();
-
-    let mut count = 0;
-    for row in 1..rows - 1 {
-        for col in 1..cols - 1 {
-            if grid[row][col] != 'A' {
-                continue;
+        for dir in DIRS {
+            let mut matched = true;
+            for (i, &c) in target.iter().enumerate().skip(1) {
+                let new = start + dir * i;
+                if !grid.contains(new) || c != grid[new] {
+                    matched = false;
+                    break;
+                }
             }
-
-            if ((grid[row - 1][col - 1] == 'M' && grid[row + 1][col + 1] == 'S')
-                || (grid[row - 1][col - 1] == 'S' && grid[row + 1][col + 1] == 'M'))
-                && ((grid[row + 1][col - 1] == 'M' && grid[row - 1][col + 1] == 'S')
-                    || (grid[row + 1][col - 1] == 'S' && grid[row - 1][col + 1] == 'M'))
-            {
+            if matched {
                 count += 1;
             }
         }
     }
     count
+}
+
+pub fn part2(grid: &Grid<u8>) -> usize {
+    grid.iter()
+        .filter(|&(point, &val)| {
+            point.y >= 1
+                && point.y < grid.height - 1
+                && point.x >= 1
+                && point.x < grid.width - 1
+                && val == b'A'
+                && ((grid[point + UP_LEFT] == b'M' && grid[point + DOWN_RIGHT] == b'S')
+                    || (grid[point + UP_LEFT] == b'S' && grid[point + DOWN_RIGHT] == b'M'))
+                && ((grid[point + UP_RIGHT] == b'M' && grid[point + DOWN_LEFT] == b'S')
+                    || (grid[point + UP_RIGHT] == b'S' && grid[point + DOWN_LEFT] == b'M'))
+        })
+        .count()
 }
