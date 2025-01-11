@@ -17,13 +17,10 @@ pub fn parse(input: &str) -> Input {
 }
 
 pub fn part1(grid: &Input) -> usize {
-    let mut count = 0;
-    for point in grid.points() {
-        if grid[point] == b'0' {
-            count += score(grid, point);
-        }
-    }
-    count
+    grid.into_iter()
+        .filter(|(_, &val)| (val == b'0'))
+        .map(|(point, _)| score(grid, point))
+        .sum()
 }
 
 fn score(grid: &Grid<u8>, point: Point) -> usize {
