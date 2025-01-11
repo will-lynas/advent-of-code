@@ -124,15 +124,12 @@ impl<'a, T> IntoIterator for &'a Grid<T> {
 
 pub struct GridIter<'a, T> {
     grid: &'a Grid<T>,
-    current_index: usize,
+    index: usize,
 }
 
 impl<'a, T> GridIter<'a, T> {
     pub fn new(grid: &'a Grid<T>) -> Self {
-        Self {
-            grid,
-            current_index: 0,
-        }
+        Self { grid, index: 0 }
     }
 }
 
@@ -140,16 +137,16 @@ impl<'a, T> Iterator for GridIter<'a, T> {
     type Item = (Point, &'a T);
 
     fn next(&mut self) -> Option<Self::Item> {
-        if self.current_index >= self.grid.body.len() {
+        if self.index >= self.grid.body.len() {
             return None;
         }
 
-        let x = (self.current_index as i32) % self.grid.width;
-        let y = (self.current_index as i32) / self.grid.width;
+        let x = (self.index as i32) % self.grid.width;
+        let y = (self.index as i32) / self.grid.width;
         let point = Point::new(x, y);
-        let value = &self.grid.body[self.current_index];
+        let value = &self.grid.body[self.index];
 
-        self.current_index += 1;
+        self.index += 1;
         Some((point, value))
     }
 }
