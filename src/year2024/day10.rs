@@ -26,7 +26,7 @@ pub fn part1(grid: &Input) -> usize {
     count
 }
 
-pub fn score(grid: &Grid<u8>, point: Point) -> usize {
+fn score(grid: &Grid<u8>, point: Point) -> usize {
     let mut seen = HashSet::new();
     let mut q = VecDeque::new();
     q.push_back(point);
