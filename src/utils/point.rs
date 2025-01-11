@@ -10,7 +10,15 @@ pub const DOWN: Point = Point::new(0, 1);
 pub const LEFT: Point = Point::new(-1, 0);
 pub const RIGHT: Point = Point::new(1, 0);
 
+pub const UP_LEFT: Point = Point::new(-1, -1);
+pub const UP_RIGHT: Point = Point::new(1, -1);
+pub const DOWN_RIGHT: Point = Point::new(1, 1);
+pub const DOWN_LEFT: Point = Point::new(-1, 1);
+
 pub const CARDINALS: [Point; 4] = [UP, RIGHT, DOWN, LEFT];
+pub const DIRS: [Point; 8] = [
+    UP, UP_RIGHT, RIGHT, DOWN_RIGHT, DOWN, DOWN_LEFT, LEFT, UP_LEFT,
+];
 
 #[derive(Hash, Copy, Clone, Eq, PartialEq, Debug)]
 pub struct Point {
