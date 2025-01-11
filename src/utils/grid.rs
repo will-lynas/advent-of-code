@@ -60,6 +60,10 @@ impl<T> Grid<T> {
     pub fn points(&self) -> impl Iterator<Item = Point> + '_ {
         (0..self.height).flat_map(move |y| (0..self.width).map(move |x| Point::new(x, y)))
     }
+
+    pub fn adjacent<'a>(&'a self, point: &'a Point) -> impl Iterator<Item = Point> + 'a {
+        point.adjacent().filter(|point| self.contains(point))
+    }
 }
 
 impl<T: PartialEq + Copy> Grid<T> {

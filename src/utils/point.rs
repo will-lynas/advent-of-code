@@ -26,6 +26,10 @@ impl Point {
     pub fn rotate_clockwise(&mut self) {
         (self.x, self.y) = (-self.y, self.x);
     }
+
+    pub fn adjacent(&self) -> impl Iterator<Item = Point> + '_ {
+        DIRS.iter().map(move |&dir| *self + dir)
+    }
 }
 
 impl Add for Point {
