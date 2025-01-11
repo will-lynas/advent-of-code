@@ -53,17 +53,16 @@ pub fn part2(grid: &Input) -> usize {
     }
 
     for i in (0..=8).rev() {
-        for (point, &val) in grid {
-            if val != i + b'0' {
-                continue;
-            }
-            counts[point] += grid
-                .adjacent(point)
-                .into_iter()
-                .filter(|&point| grid[point] == i + 1 + b'0')
-                .map(|point| counts[point])
-                .sum::<usize>();
-        }
+        grid.iter()
+            .filter(|(_, &val)| val == i + b'0')
+            .for_each(|(point, _)| {
+                counts[point] += grid
+                    .adjacent(point)
+                    .into_iter()
+                    .filter(|&point| grid[point] == i + 1 + b'0')
+                    .map(|point| counts[point])
+                    .sum::<usize>();
+            });
     }
 
     counts
