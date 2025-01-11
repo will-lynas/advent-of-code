@@ -46,15 +46,15 @@ fn score(grid: &Grid<u8>, point: Point) -> usize {
 pub fn part2(grid: &Input) -> usize {
     let mut counts = grid.zero_grid();
 
-    for (point, val) in grid {
-        if *val == b'9' {
+    for (point, &val) in grid {
+        if val == b'9' {
             counts[point] = 1;
         }
     }
 
     for i in (0..=8).rev() {
-        for point in grid.points() {
-            if grid[point] != i + b'0' {
+        for (point, &val) in grid {
+            if val != i + b'0' {
                 continue;
             }
             counts[point] += grid
@@ -67,9 +67,8 @@ pub fn part2(grid: &Input) -> usize {
     }
 
     counts
-        .points()
         .iter()
-        .filter(|&&point| grid[point] == b'0')
-        .map(|&point| counts[point])
+        .filter(|&(point, _)| grid[point] == b'0')
+        .map(|(_, &val)| val)
         .sum()
 }
