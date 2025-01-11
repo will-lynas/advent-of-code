@@ -39,13 +39,10 @@ pub fn part1(grid: &Grid<u8>) -> i32 {
 }
 
 pub fn part2(grid: &Grid<u8>) -> usize {
-    grid.iter()
-        .filter(|&(point, &val)| {
-            point.y >= 1
-                && point.y < grid.height - 1
-                && point.x >= 1
-                && point.x < grid.width - 1
-                && val == b'A'
+    grid.inner_points(1)
+        .into_iter()
+        .filter(|&point| {
+            grid[point] == b'A'
                 && ((grid[point + UP_LEFT] == b'M' && grid[point + DOWN_RIGHT] == b'S')
                     || (grid[point + UP_LEFT] == b'S' && grid[point + DOWN_RIGHT] == b'M'))
                 && ((grid[point + UP_RIGHT] == b'M' && grid[point + DOWN_LEFT] == b'S')

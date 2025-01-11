@@ -68,8 +68,12 @@ impl<T> Grid<T> {
     }
 
     pub fn points(&self) -> Vec<Point> {
-        (0..self.height)
-            .flat_map(move |y| (0..self.width).map(move |x| Point::new(x, y)))
+        self.inner_points(0)
+    }
+
+    pub fn inner_points(&self, n: i32) -> Vec<Point> {
+        (n..self.height - n)
+            .flat_map(move |y| (n..self.width - n).map(move |x| Point::new(x, y)))
             .collect()
     }
 
