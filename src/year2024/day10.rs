@@ -17,7 +17,7 @@ pub fn parse(input: &str) -> Input {
 }
 
 pub fn part1(grid: &Input) -> usize {
-    grid.into_iter()
+    grid.iter()
         .filter(|(_, &val)| (val == b'0'))
         .map(|(point, _)| score(grid, point))
         .sum()
