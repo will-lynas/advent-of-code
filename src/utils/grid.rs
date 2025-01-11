@@ -137,16 +137,11 @@ impl<'a, T> Iterator for GridIter<'a, T> {
     type Item = (Point, &'a T);
 
     fn next(&mut self) -> Option<Self::Item> {
-        if self.index >= self.grid.body.len() {
-            return None;
-        }
-
-        let x = (self.index as i32) % self.grid.width;
-        let y = (self.index as i32) / self.grid.width;
-        let point = Point::new(x, y);
-        let value = &self.grid.body[self.index];
-
-        self.index += 1;
-        Some((point, value))
+        (self.index < self.grid.body.len()).then(|| {
+            let point = self.grid.point(self.index);
+            let value = &self.grid.body[self.index];
+            self.index += 1;
+            (point, value)
+        })
     }
 }
