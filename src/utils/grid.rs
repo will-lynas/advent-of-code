@@ -57,8 +57,10 @@ impl<T> Grid<T> {
         point.y >= 0 && point.y < self.height && point.x >= 0 && point.x < self.width
     }
 
-    pub fn points(&self) -> impl Iterator<Item = Point> + '_ {
-        (0..self.height).flat_map(move |y| (0..self.width).map(move |x| Point::new(x, y)))
+    pub fn points(&self) -> Vec<Point> {
+        (0..self.height)
+            .flat_map(move |y| (0..self.width).map(move |x| Point::new(x, y)))
+            .collect()
     }
 
     pub fn adjacent<'a>(&'a self, point: &'a Point) -> impl Iterator<Item = Point> + 'a {

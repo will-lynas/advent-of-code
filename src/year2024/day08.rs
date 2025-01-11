@@ -15,7 +15,7 @@ type Input = (Grid<u8>, HashMap<u8, Vec<Point>>);
 pub fn parse(input: &str) -> Input {
     let grid = Grid::parse(input);
     let mut map = HashMap::new();
-    grid.points().for_each(|point| {
+    grid.points().into_iter().for_each(|point| {
         let c = grid[point];
         if c != b'.' {
             map.entry(c).or_insert_with(Vec::new).push(point);
