@@ -61,6 +61,12 @@ impl<T> Grid<T> {
         point.y >= 0 && point.y < self.height && point.x >= 0 && point.x < self.width
     }
 
+    pub fn point(&self, index: usize) -> Point {
+        let x = (index as i32) % self.width;
+        let y = (index as i32) / self.width;
+        Point::new(x, y)
+    }
+
     pub fn points(&self) -> Vec<Point> {
         (0..self.height)
             .flat_map(move |y| (0..self.width).map(move |x| Point::new(x, y)))
@@ -86,11 +92,10 @@ impl<T> Grid<T> {
 
 impl<T: PartialEq + Copy> Grid<T> {
     pub fn find(&self, goal: &T) -> Option<Point> {
-        self.body.iter().position(|b| b == goal).map(|index| {
-            let x = (index as i32) % self.width;
-            let y = (index as i32) / self.width;
-            Point::new(x, y)
-        })
+        self.body
+            .iter()
+            .position(|b| b == goal)
+            .map(|index| self.point(index))
     }
 }
 
