@@ -27,8 +27,8 @@ impl Point {
         (self.x, self.y) = (-self.y, self.x);
     }
 
-    pub fn adjacent(&self) -> impl Iterator<Item = Point> + '_ {
-        DIRS.iter().map(move |&dir| *self + dir)
+    pub fn adjacent(&self) -> Vec<Self> {
+        DIRS.iter().map(move |&dir| *self + dir).collect()
     }
 }
 

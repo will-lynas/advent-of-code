@@ -64,7 +64,10 @@ impl<T> Grid<T> {
     }
 
     pub fn adjacent<'a>(&'a self, point: &'a Point) -> impl Iterator<Item = Point> + 'a {
-        point.adjacent().filter(|point| self.contains(point))
+        point
+            .adjacent()
+            .into_iter()
+            .filter(|point| self.contains(point))
     }
 }
 
