@@ -40,6 +40,12 @@ impl Add for Point {
     }
 }
 
+impl AddAssign for Point {
+    fn add_assign(&mut self, rhs: Self) {
+        *self = *self + rhs;
+    }
+}
+
 impl Sub for Point {
     type Output = Point;
 
@@ -53,11 +59,5 @@ impl Mul<i32> for Point {
 
     fn mul(self, n: i32) -> Self {
         Self::new(self.x * n, self.y * n)
-    }
-}
-
-impl AddAssign for Point {
-    fn add_assign(&mut self, rhs: Self) {
-        *self = *self + rhs;
     }
 }
