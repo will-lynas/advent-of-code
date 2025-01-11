@@ -10,7 +10,7 @@ pub const DOWN: Point = Point::new(0, 1);
 pub const LEFT: Point = Point::new(-1, 0);
 pub const RIGHT: Point = Point::new(1, 0);
 
-pub const DIRS: [Point; 4] = [UP, RIGHT, DOWN, LEFT];
+pub const CARDINALS: [Point; 4] = [UP, RIGHT, DOWN, LEFT];
 
 #[derive(Hash, Copy, Clone, Eq, PartialEq, Debug)]
 pub struct Point {
@@ -28,7 +28,7 @@ impl Point {
     }
 
     pub fn adjacent(&self) -> Vec<Self> {
-        DIRS.iter().map(move |&dir| *self + dir).collect()
+        CARDINALS.iter().map(move |&dir| *self + dir).collect()
     }
 }
 
