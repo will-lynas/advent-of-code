@@ -21,5 +21,5 @@ fn part1() {
 #[test]
 fn part2() {
     let input = solution::parse(EXAMPLE);
-    assert_eq!(solution::part2(&input), 13);
+    assert_eq!(solution::part2(&input), 81);
 }

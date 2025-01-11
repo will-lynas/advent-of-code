@@ -70,6 +70,14 @@ impl<T> Grid<T> {
             .filter(|point| self.contains(*point))
             .collect()
     }
+
+    pub fn zero_grid(&self) -> Grid<usize> {
+        Grid {
+            width: self.width,
+            height: self.height,
+            body: vec![0; (self.width * self.height) as usize],
+        }
+    }
 }
 
 impl<T: PartialEq + Copy> Grid<T> {
