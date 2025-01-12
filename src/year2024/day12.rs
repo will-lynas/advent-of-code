@@ -8,8 +8,20 @@ use crate::utils::{
     point::Point,
 };
 
-pub fn parse(input: &str) -> Grid<u8> {
-    Grid::parse(input)
+type Input = Vec<(usize, HashSet<(Point, Point)>)>;
+
+pub fn parse(input: &str) -> Input {
+    let grid = Grid::parse(input);
+    let mut out = Vec::new();
+    let mut visited = HashSet::new();
+    for point in grid.points() {
+        let mut edges = HashSet::new();
+        let mut area = 0;
+        let plant = grid[point];
+        dfs(&grid, point, plant, &mut visited, &mut edges, &mut area);
+        out.push((area, edges));
+    }
+    out
 }
 
 fn dfs(
@@ -34,20 +46,10 @@ fn dfs(
     }
 }
 
-pub fn part1(grid: &Grid<u8>) -> usize {
-    let mut visited = HashSet::new();
-    let mut total = 0;
-
-    for point in grid.points() {
-        let mut edges = HashSet::new();
-        let mut area = 0;
-        let plant = grid[point];
-        dfs(grid, point, plant, &mut visited, &mut edges, &mut area);
-        total += edges.len() * area;
-    }
-    total
+pub fn part1(input: &Input) -> usize {
+    input.iter().map(|(area, edges)| area * edges.len()).sum()
 }
 
-pub fn part2(_grid: &Grid<u8>) -> usize {
+pub fn part2(_grid: &Input) -> usize {
     0
 }
