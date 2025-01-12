@@ -16,7 +16,7 @@ fn split_digits(n: u64) -> Option<(u64, u64)> {
     })
 }
 
-fn answer(stones: &Stones, remaining: usize) -> usize {
+fn inner(stones: &Stones, remaining: usize) -> usize {
     if remaining == 0 {
         return stones.len();
     }
@@ -30,9 +30,13 @@ fn answer(stones: &Stones, remaining: usize) -> usize {
             } else {
                 vec![stone * 2024]
             };
-            answer(&new_stones, remaining - 1)
+            inner(&new_stones, remaining - 1)
         })
         .sum()
+}
+
+fn answer(stones: &Stones, iterations: usize) -> usize {
+    inner(stones, iterations)
 }
 
 pub fn part1(stones: &Stones) -> usize {
