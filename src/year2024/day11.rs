@@ -1,3 +1,8 @@
+use gxhash::{
+    HashMap,
+    HashMapExt,
+};
+
 type Stones = Vec<u64>;
 
 pub fn parse(input: &str) -> Stones {
@@ -16,13 +21,17 @@ fn split_digits(n: u64) -> Option<(u64, u64)> {
     })
 }
 
-fn inner(stones: &Stones, remaining: usize) -> usize {
+fn inner(stones: &Stones, remaining: usize, cache: &mut HashMap<(u64, usize), usize>) -> usize {
     if remaining == 0 {
         return stones.len();
     }
     stones
         .iter()
         .map(|&stone| {
+            if let Some(&ans) = cache.get(&(stone, remaining - 1)) {
+                return ans;
+            }
+
             let new_stones = if stone == 0 {
                 vec![1]
             } else if let Some(res) = split_digits(stone) {
@@ -30,13 +39,17 @@ fn inner(stones: &Stones, remaining: usize) -> usize {
             } else {
                 vec![stone * 2024]
             };
-            inner(&new_stones, remaining - 1)
+
+            let ans = inner(&new_stones, remaining - 1, cache);
+            cache.insert((stone, remaining - 1), ans);
+            ans
         })
         .sum()
 }
 
 fn answer(stones: &Stones, iterations: usize) -> usize {
-    inner(stones, iterations)
+    let mut cache = HashMap::new();
+    inner(stones, iterations, &mut cache)
 }
 
 pub fn part1(stones: &Stones) -> usize {
