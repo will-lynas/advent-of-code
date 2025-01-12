@@ -38,18 +38,20 @@ impl Edge {
         (self.end - self.start).normalized()
     }
 
-    pub fn try_join(&mut self, other: &Self) -> bool {
-        if self.dir() != other.dir() {
-            return false;
+    pub fn merge(e1: Edge, e2: Edge) -> Option<Self> {
+        if e1.dir() != e2.dir() {
+            return None;
         }
-        if self.end == other.start {
-            self.end = other.end;
-            true
-        } else if self.start == other.end {
-            self.start = other.start;
-            true
+        if e1.start == e2.start {
+            Some(Self::new(e1.end, e2.end))
+        } else if e1.start == e2.end {
+            Some(Self::new(e1.end, e2.start))
+        } else if e1.end == e2.start {
+            Some(Self::new(e1.start, e2.end))
+        } else if e1.end == e2.end {
+            Some(Self::new(e1.start, e2.start))
         } else {
-            false
+            None
         }
     }
 }
@@ -92,85 +94,5 @@ mod tests {
             end: Point::new(0, 1),
         };
         assert_eq!(edge.dir(), DOWN);
-    }
-
-    #[test]
-    fn test_try_join_success_end_to_start() {
-        let mut edge1 = Edge {
-            start: Point::new(0, 0),
-            end: Point::new(1, 0),
-        };
-        let edge2 = Edge {
-            start: Point::new(1, 0),
-            end: Point::new(2, 0),
-        };
-        assert!(edge1.try_join(&edge2));
-        assert_eq!(
-            edge1,
-            Edge {
-                start: Point::new(0, 0),
-                end: Point::new(2, 0),
-            }
-        );
-    }
-
-    #[test]
-    fn test_try_join_success_start_to_end() {
-        let mut edge1 = Edge {
-            start: Point::new(1, 0),
-            end: Point::new(2, 0),
-        };
-        let edge2 = Edge {
-            start: Point::new(0, 0),
-            end: Point::new(1, 0),
-        };
-        assert!(edge1.try_join(&edge2));
-        assert_eq!(
-            edge1,
-            Edge {
-                start: Point::new(0, 0),
-                end: Point::new(2, 0),
-            }
-        );
-    }
-
-    #[test]
-    fn test_try_join_fail_different_directions() {
-        let mut edge1 = Edge {
-            start: Point::new(0, 0),
-            end: Point::new(1, 0),
-        };
-        let edge2 = Edge {
-            start: Point::new(1, 0),
-            end: Point::new(1, 1),
-        };
-        assert!(!edge1.try_join(&edge2));
-        assert_eq!(
-            edge1,
-            Edge {
-                start: Point::new(0, 0),
-                end: Point::new(1, 0),
-            }
-        );
-    }
-
-    #[test]
-    fn test_try_join_fail_not_connected() {
-        let mut edge1 = Edge {
-            start: Point::new(0, 0),
-            end: Point::new(1, 0),
-        };
-        let edge2 = Edge {
-            start: Point::new(2, 0),
-            end: Point::new(3, 0),
-        };
-        assert!(!edge1.try_join(&edge2));
-        assert_eq!(
-            edge1,
-            Edge {
-                start: Point::new(0, 0),
-                end: Point::new(1, 0),
-            }
-        );
     }
 }
