@@ -1,6 +1,6 @@
-type Input = Vec<u64>;
+type Stones = Vec<u64>;
 
-pub fn parse(input: &str) -> Input {
+pub fn parse(input: &str) -> Stones {
     input
         .split_whitespace()
         .map(|n| n.parse().unwrap())
@@ -16,8 +16,8 @@ fn split_digits(n: u64) -> Option<(u64, u64)> {
     })
 }
 
-pub fn part1(input: &Input) -> usize {
-    let mut stones = input.clone();
+pub fn part1(stones: &Stones) -> usize {
+    let mut stones = stones.clone();
     for _ in 0..25 {
         let mut new_stones = Vec::new();
         for &stone in &stones {
@@ -35,6 +35,6 @@ pub fn part1(input: &Input) -> usize {
     stones.len()
 }
 
-pub fn part2(input: &Input) -> usize {
-    input.len()
+pub fn part2(stones: &Stones) -> usize {
+    stones.len()
 }
