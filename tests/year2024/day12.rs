@@ -1,11 +1,23 @@
 use advent_of_code::year2024::day12 as solution;
+use indoc::indoc;
 
-const EXAMPLE: &str = "Hello, World!";
+const EXAMPLE: &str = indoc! {"
+    RRRRIICCFF
+    RRRRIICCCF
+    VVRRRCCFFF
+    VVRCCCJFFF
+    VVVVCJJCFE
+    VVIVCCJJEE
+    VVIIICJJEE
+    MIIIIIJJEE
+    MIIISIJEEE
+    MMMISSJEEE
+"};
 
 #[test]
 fn part1() {
     let input = solution::parse(EXAMPLE);
-    assert_eq!(solution::part1(&input), 13);
+    assert_eq!(solution::part1(&input), 1930);
 }
 
 #[test]
