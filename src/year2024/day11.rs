@@ -16,23 +16,23 @@ fn split_digits(n: u64) -> Option<(u64, u64)> {
     })
 }
 
-fn answer(stones: &Stones, n: usize) -> usize {
-    let mut stones = stones.clone();
-    for _ in 0..n {
-        let mut new_stones = Vec::new();
-        for &stone in &stones {
-            if stone == 0 {
-                new_stones.push(1);
-            } else if let Some(res) = split_digits(stone) {
-                new_stones.push(res.0);
-                new_stones.push(res.1);
-            } else {
-                new_stones.push(stone * 2024);
-            }
-        }
-        stones = new_stones;
+fn answer(stones: &Stones, remaining: usize) -> usize {
+    if remaining == 0 {
+        return stones.len();
     }
-    stones.len()
+    stones
+        .iter()
+        .map(|&stone| {
+            let new_stones = if stone == 0 {
+                vec![1]
+            } else if let Some(res) = split_digits(stone) {
+                vec![res.0, res.1]
+            } else {
+                vec![stone * 2024]
+            };
+            answer(&new_stones, remaining - 1)
+        })
+        .sum()
 }
 
 pub fn part1(stones: &Stones) -> usize {
