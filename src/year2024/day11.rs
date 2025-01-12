@@ -40,5 +40,5 @@ pub fn part1(stones: &Stones) -> usize {
 }
 
 pub fn part2(stones: &Stones) -> usize {
-    stones.len()
+    do_iters(stones, 75)
 }
