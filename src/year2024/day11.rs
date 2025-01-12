@@ -1,10 +1,14 @@
-type Input = String;
+type Input = Vec<u64>;
 
 pub fn parse(input: &str) -> Input {
-    input.into()
+    input
+        .split_whitespace()
+        .map(|n| n.parse().unwrap())
+        .collect()
 }
 
 pub fn part1(input: &Input) -> usize {
+    println!("{input:?}");
     input.len()
 }
 
