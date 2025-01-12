@@ -16,9 +16,9 @@ fn split_digits(n: u64) -> Option<(u64, u64)> {
     })
 }
 
-pub fn part1(stones: &Stones) -> usize {
+fn do_iters(stones: &Stones, n: usize) -> usize {
     let mut stones = stones.clone();
-    for _ in 0..25 {
+    for _ in 0..n {
         let mut new_stones = Vec::new();
         for &stone in &stones {
             if stone == 0 {
@@ -33,6 +33,10 @@ pub fn part1(stones: &Stones) -> usize {
         stones = new_stones;
     }
     stones.len()
+}
+
+pub fn part1(stones: &Stones) -> usize {
+    do_iters(stones, 25)
 }
 
 pub fn part2(stones: &Stones) -> usize {
