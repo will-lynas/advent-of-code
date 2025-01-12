@@ -4,11 +4,12 @@ use gxhash::{
 };
 
 use crate::utils::{
+    edge::Edge,
     grid::Grid,
     point::Point,
 };
 
-type Input = Vec<(usize, HashSet<(Point, Point)>)>;
+type Input = Vec<(usize, HashSet<Edge>)>;
 
 pub fn parse(input: &str) -> Input {
     let grid = Grid::parse(input);
@@ -29,7 +30,7 @@ fn dfs(
     point: Point,
     plant: u8,
     visited: &mut HashSet<Point>,
-    edges: &mut HashSet<(Point, Point)>,
+    edges: &mut HashSet<Edge>,
     area: &mut usize,
 ) {
     if visited.contains(&point) {
@@ -41,7 +42,7 @@ fn dfs(
         if grid.contains(adjacent) && grid[adjacent] == plant {
             dfs(grid, adjacent, plant, visited, edges, area);
         } else {
-            edges.insert((point, adjacent));
+            edges.insert(Edge::from_points(point, adjacent));
         }
     }
 }
