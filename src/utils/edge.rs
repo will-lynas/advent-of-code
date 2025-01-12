@@ -29,4 +29,30 @@ impl Edge {
         let dir = p2 - p1;
         Self::from_point_dir(p1, dir)
     }
+
+    pub fn dir(&self) -> Point {
+        let res = self.end - self.start;
+        if res.x == 0 {
+            DOWN
+        } else if res.y == 0 {
+            RIGHT
+        } else {
+            unreachable!()
+        }
+    }
+
+    pub fn try_join(&mut self, other: &Self) -> bool {
+        if self.dir() != other.dir() {
+            return false;
+        }
+        if self.end == other.start {
+            self.end = other.end;
+            true
+        } else if self.start == other.end {
+            self.start = other.start;
+            true
+        } else {
+            false
+        }
+    }
 }
