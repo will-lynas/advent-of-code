@@ -49,3 +49,44 @@ impl Edge {
         }
     }
 }
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    #[test]
+    fn test_dir_right() {
+        let edge = Edge {
+            start: Point::new(0, 0),
+            end: Point::new(1, 0),
+        };
+        assert_eq!(edge.dir(), RIGHT);
+    }
+
+    #[test]
+    fn test_dir_left() {
+        let edge = Edge {
+            start: Point::new(1, 0),
+            end: Point::new(0, 0),
+        };
+        assert_eq!(edge.dir(), LEFT);
+    }
+
+    #[test]
+    fn test_dir_up() {
+        let edge = Edge {
+            start: Point::new(0, 1),
+            end: Point::new(0, 0),
+        };
+        assert_eq!(edge.dir(), UP);
+    }
+
+    #[test]
+    fn test_dir_down() {
+        let edge = Edge {
+            start: Point::new(0, 0),
+            end: Point::new(0, 1),
+        };
+        assert_eq!(edge.dir(), DOWN);
+    }
+}
