@@ -7,7 +7,7 @@ use super::point::{
     UP,
 };
 
-#[derive(Eq, Hash, PartialEq, Debug)]
+#[derive(Eq, Hash, PartialEq, Debug, Copy, Clone)]
 pub struct Edge {
     pub start: Point,
     pub end: Point,
