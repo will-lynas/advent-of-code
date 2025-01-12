@@ -31,14 +31,7 @@ impl Edge {
     }
 
     pub fn dir(&self) -> Point {
-        let res = self.end - self.start;
-        if res.x == 0 {
-            DOWN
-        } else if res.y == 0 {
-            RIGHT
-        } else {
-            unreachable!()
-        }
+        (self.end - self.start).normalized()
     }
 
     pub fn try_join(&mut self, other: &Self) -> bool {
