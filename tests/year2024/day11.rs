@@ -8,8 +8,4 @@ fn part1() {
     assert_eq!(solution::part1(&input), 55312);
 }
 
-#[test]
-fn part2() {
-    let input = solution::parse(EXAMPLE);
-    assert_eq!(solution::part2(&input), 13);
-}
+// Part 2 has no test
