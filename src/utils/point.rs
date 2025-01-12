@@ -1,8 +1,11 @@
-use std::ops::{
-    Add,
-    AddAssign,
-    Mul,
-    Sub,
+use std::{
+    cmp::Ordering,
+    ops::{
+        Add,
+        AddAssign,
+        Mul,
+        Sub,
+    },
 };
 
 use num::integer::gcd;
@@ -28,6 +31,21 @@ pub const DIRS: [Point; 8] = [
 pub struct Point {
     pub x: i32,
     pub y: i32,
+}
+
+impl Ord for Point {
+    fn cmp(&self, other: &Self) -> Ordering {
+        match self.y.cmp(&other.y) {
+            Ordering::Equal => self.x.cmp(&other.x),
+            other => other,
+        }
+    }
+}
+
+impl PartialOrd for Point {
+    fn partial_cmp(&self, other: &Self) -> Option<Ordering> {
+        Some(self.cmp(other))
+    }
 }
 
 impl Point {
