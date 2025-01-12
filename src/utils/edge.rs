@@ -14,6 +14,10 @@ pub struct Edge {
 }
 
 impl Edge {
+    pub fn new(start: Point, end: Point) -> Self {
+        Self { start, end }
+    }
+
     pub fn from_point_dir(point: Point, dir: Point) -> Self {
         let (start, end) = match dir {
             UP => (point, point + RIGHT),
