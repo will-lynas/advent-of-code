@@ -9,7 +9,7 @@ use crate::utils::{
     point::Point,
 };
 
-type Input = Vec<(u8, usize, Vec<Edge>)>;
+type Input = Vec<(usize, Vec<Edge>)>;
 
 pub fn parse(input: &str) -> Input {
     let grid = Grid::parse(input);
@@ -23,7 +23,7 @@ pub fn parse(input: &str) -> Input {
         let mut area = 0;
         let plant = grid[point];
         dfs(&grid, point, plant, &mut visited, &mut edges, &mut area);
-        out.push((plant, area, edges));
+        out.push((area, edges));
     }
     out
 }
@@ -51,12 +51,9 @@ fn dfs(
 }
 
 pub fn part1(input: &Input) -> usize {
-    input
-        .iter()
-        .map(|(_, area, edges)| area * edges.len())
-        .sum()
+    input.iter().map(|(area, edges)| area * edges.len()).sum()
 }
 
 pub fn part2(input: &Input) -> usize {
-    input.iter().map(|(_plant, _area, _edges)| 0).sum()
+    input.iter().map(|(_area, _edges)| 0).sum()
 }
