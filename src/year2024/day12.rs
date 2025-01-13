@@ -60,9 +60,8 @@ pub fn part2(input: &Input) -> usize {
         .map(|(area, edges)| {
             let mut edges: Vec<_> = edges.iter().copied().collect();
             let mut len = 0;
-            while !edges.is_empty() {
+            while let Some(first) = edges.pop() {
                 let mut new_edges = vec![];
-                let first = edges.pop().unwrap();
                 let mut current = first;
                 while let Some(pos) = edges.iter().position(|&edge| edge.connected(current)) {
                     let next = edges.remove(pos);
