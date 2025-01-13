@@ -1,4 +1,11 @@
-use std::hash::Hash;
+use std::{
+    fmt,
+    fmt::{
+        Debug,
+        Formatter,
+    },
+    hash::Hash,
+};
 
 use super::point::{
     Point,
@@ -9,7 +16,7 @@ use super::point::{
     UP,
 };
 
-#[derive(Debug, Copy, Clone, Eq, PartialEq, Hash)]
+#[derive(Copy, Clone, Eq, PartialEq, Hash)]
 pub struct Edge {
     p1: Point,
     p2: Point,
@@ -60,6 +67,12 @@ impl Edge {
 
     pub fn connected(&self, other: Edge) -> bool {
         self.p1 == other.p1 || self.p1 == other.p2 || self.p2 == other.p1 || self.p2 == other.p2
+    }
+}
+
+impl Debug for Edge {
+    fn fmt(&self, f: &mut Formatter<'_>) -> fmt::Result {
+        write!(f, "{:?} - {:?}", self.p1, self.p2)
     }
 }
 
