@@ -1,5 +1,10 @@
 use std::{
     cmp::Ordering,
+    fmt::{
+        self,
+        Debug,
+        Formatter,
+    },
     ops::{
         Add,
         AddAssign,
@@ -27,7 +32,7 @@ pub const DIRS: [Point; 8] = [
     UP, UP_RIGHT, RIGHT, DOWN_RIGHT, DOWN, DOWN_LEFT, LEFT, UP_LEFT,
 ];
 
-#[derive(Hash, Copy, Clone, Eq, PartialEq, Debug)]
+#[derive(Hash, Copy, Clone, Eq, PartialEq)]
 pub struct Point {
     pub x: i32,
     pub y: i32,
@@ -56,6 +61,12 @@ impl Point {
             x: self.x / n,
             y: self.y / n,
         }
+    }
+}
+
+impl Debug for Point {
+    fn fmt(&self, f: &mut Formatter<'_>) -> fmt::Result {
+        write!(f, "({},{})", self.x, self.y)
     }
 }
 
