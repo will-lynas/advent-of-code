@@ -37,8 +37,9 @@ impl Hash for Edge {
 }
 
 impl Edge {
-    pub fn new(start: Point, end: Point) -> Self {
-        Self { p1: start, p2: end }
+    pub fn new(p1: Point, p2: Point) -> Self {
+        let (p1, p2) = if p1 < p2 { (p1, p2) } else { (p2, p1) };
+        Self { p1, p2 }
     }
 
     pub fn from_point_dir(point: Point, dir: Point) -> Self {
