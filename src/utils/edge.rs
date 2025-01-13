@@ -11,8 +11,8 @@ use super::point::{
 
 #[derive(Debug, Copy, Clone, Eq, PartialEq, Hash)]
 pub struct Edge {
-    pub p1: Point,
-    pub p2: Point,
+    p1: Point,
+    p2: Point,
 }
 
 impl Edge {
