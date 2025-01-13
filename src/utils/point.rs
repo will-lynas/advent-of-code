@@ -1,5 +1,4 @@
 use std::{
-    cmp::Ordering,
     fmt::{
         self,
         Debug,
@@ -32,15 +31,15 @@ pub const DIRS: [Point; 8] = [
     UP, UP_RIGHT, RIGHT, DOWN_RIGHT, DOWN, DOWN_LEFT, LEFT, UP_LEFT,
 ];
 
-#[derive(Hash, Copy, Clone, Eq, PartialEq)]
+#[derive(PartialOrd, Ord, Hash, Copy, Clone, Eq, PartialEq)]
 pub struct Point {
-    pub x: i32,
     pub y: i32,
+    pub x: i32,
 }
 
 impl Point {
     pub const fn new(x: i32, y: i32) -> Self {
-        Self { x, y }
+        Self { y, x }
     }
 
     pub fn rotate_clockwise(&mut self) {
@@ -79,21 +78,6 @@ impl Point {
 impl Debug for Point {
     fn fmt(&self, f: &mut Formatter<'_>) -> fmt::Result {
         write!(f, "({},{})", self.x, self.y)
-    }
-}
-
-impl Ord for Point {
-    fn cmp(&self, other: &Self) -> Ordering {
-        match self.y.cmp(&other.y) {
-            Ordering::Equal => self.x.cmp(&other.x),
-            other => other,
-        }
-    }
-}
-
-impl PartialOrd for Point {
-    fn partial_cmp(&self, other: &Self) -> Option<Ordering> {
-        Some(self.cmp(other))
     }
 }
 
