@@ -42,7 +42,7 @@ impl Edge {
     }
 
     pub fn merge(e1: Edge, e2: Edge) -> Option<Self> {
-        if e1.dir() != e2.dir() && e1.dir() != e2.dir() * -1 {
+        if e1.dir() != e2.dir() {
             return None;
         }
         if e1.p1 == e2.p1 {
