@@ -33,10 +33,11 @@ impl Grid<u8> {
         }
     }
 
-    pub fn print_with_points(&self, points: impl IntoIterator<Item = Point>) {
+    #[must_use]
+    pub fn with_points(&self, points: impl IntoIterator<Item = Point>) -> Self {
         let mut grid = self.clone();
         points.into_iter().for_each(|point| grid[point] = b'#');
-        println!("{grid:?}");
+        grid
     }
 }
 
