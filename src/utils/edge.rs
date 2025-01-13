@@ -65,37 +65,27 @@ mod tests {
 
     #[test]
     fn test_dir_right() {
-        let edge = Edge {
-            p1: Point::new(0, 0),
-            p2: Point::new(1, 0),
-        };
+        let edge = Edge::new(Point::new(0, 0), Point::new(1, 0));
         assert_eq!(edge.dir(), RIGHT);
     }
 
     #[test]
     fn test_dir_left() {
-        let edge = Edge {
-            p1: Point::new(1, 0),
-            p2: Point::new(0, 0),
-        };
-        assert_eq!(edge.dir(), LEFT);
-    }
-
-    #[test]
-    fn test_dir_up() {
-        let edge = Edge {
-            p1: Point::new(0, 1),
-            p2: Point::new(0, 0),
-        };
-        assert_eq!(edge.dir(), UP);
+        let edge = Edge::new(Point::new(1, 0), Point::new(0, 0));
+        // The points get flipped
+        assert_eq!(edge.dir(), RIGHT);
     }
 
     #[test]
     fn test_dir_down() {
-        let edge = Edge {
-            p1: Point::new(0, 0),
-            p2: Point::new(0, 1),
-        };
+        let edge = Edge::new(Point::new(0, 0), Point::new(0, 1));
+        assert_eq!(edge.dir(), DOWN);
+    }
+
+    #[test]
+    fn test_dir_up() {
+        let edge = Edge::new(Point::new(0, 1), Point::new(0, 0));
+        // The points get flipped
         assert_eq!(edge.dir(), DOWN);
     }
 }
