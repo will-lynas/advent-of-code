@@ -57,6 +57,10 @@ impl Edge {
             None
         }
     }
+
+    pub fn connected(e1: Edge, e2: Edge) -> bool {
+        e1.p1 == e2.p1 || e1.p1 == e2.p2 || e1.p2 == e2.p1 || e1.p2 == e2.p2
+    }
 }
 
 #[cfg(test)]
@@ -87,5 +91,26 @@ mod tests {
         let edge = Edge::new(Point::new(0, 1), Point::new(0, 0));
         // The points get flipped
         assert_eq!(edge.dir(), DOWN);
+    }
+
+    #[test]
+    fn test_connected_same_point() {
+        let edge1 = Edge::new(Point::new(0, 0), Point::new(1, 0));
+        let edge2 = Edge::new(Point::new(1, 0), Point::new(2, 0));
+        assert!(Edge::connected(edge1, edge2));
+    }
+
+    #[test]
+    fn test_connected_no_connection() {
+        let edge1 = Edge::new(Point::new(0, 0), Point::new(1, 0));
+        let edge2 = Edge::new(Point::new(2, 0), Point::new(3, 0));
+        assert!(!Edge::connected(edge1, edge2));
+    }
+
+    #[test]
+    fn test_connected_reversed() {
+        let edge1 = Edge::new(Point::new(0, 0), Point::new(1, 0));
+        let edge2 = Edge::new(Point::new(0, 0), Point::new(-1, 0));
+        assert!(Edge::connected(edge1, edge2));
     }
 }
