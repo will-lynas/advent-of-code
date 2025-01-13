@@ -1,7 +1,4 @@
-use std::hash::{
-    Hash,
-    Hasher,
-};
+use std::hash::Hash;
 
 use super::point::{
     Point,
@@ -12,28 +9,10 @@ use super::point::{
     UP,
 };
 
-#[derive(Debug, Copy, Clone, Eq)]
+#[derive(Debug, Copy, Clone, Eq, PartialEq, Hash)]
 pub struct Edge {
     pub p1: Point,
     pub p2: Point,
-}
-
-impl PartialEq for Edge {
-    fn eq(&self, other: &Self) -> bool {
-        (self.p1 == other.p1 && self.p2 == other.p2) || (self.p1 == other.p2 && self.p2 == other.p1)
-    }
-}
-
-impl Hash for Edge {
-    fn hash<H: Hasher>(&self, state: &mut H) {
-        let (min_point, max_point) = if self.p1 < self.p2 {
-            (&self.p1, &self.p2)
-        } else {
-            (&self.p2, &self.p1)
-        };
-        min_point.hash(state);
-        max_point.hash(state);
-    }
 }
 
 impl Edge {
