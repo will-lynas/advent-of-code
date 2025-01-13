@@ -62,6 +62,10 @@ impl Point {
             y: self.y / n,
         }
     }
+
+    pub fn norm1(&self) -> i32 {
+        self.x.abs() + self.y.abs()
+    }
 }
 
 impl Debug for Point {
