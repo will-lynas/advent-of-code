@@ -16,6 +16,9 @@ pub fn parse(input: &str) -> Input {
     let mut out = Vec::new();
     let mut visited = HashSet::new();
     for point in grid.points() {
+        if visited.contains(&point) {
+            continue;
+        }
         let mut edges = HashSet::new();
         let mut area = 0;
         let plant = grid[point];
