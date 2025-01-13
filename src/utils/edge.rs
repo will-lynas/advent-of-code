@@ -22,14 +22,14 @@ impl Edge {
     }
 
     pub fn from_point_dir(point: Point, dir: Point) -> Self {
-        let (start, end) = match dir {
+        let (p1, p2) = match dir {
             UP => (point, point + RIGHT),
             LEFT => (point, point + DOWN),
             DOWN => (point + DOWN, point + DOWN_RIGHT),
             RIGHT => (point + RIGHT, point + DOWN_RIGHT),
             _ => panic!("Invalid dir: {dir:?}"),
         };
-        Edge { p1: start, p2: end }
+        Self::new(p1, p2)
     }
 
     pub fn from_points(p1: Point, p2: Point) -> Self {
