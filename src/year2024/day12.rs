@@ -58,26 +58,25 @@ pub fn part2(input: &Input) -> usize {
     input
         .iter()
         .map(|(area, edges)| {
-            let mut new_edges = vec![];
             let mut edges: Vec<_> = edges.iter().copied().collect();
-            let first = edges.pop().unwrap();
-            let mut current = first;
+            let mut len = 0;
             while !edges.is_empty() {
-                let pos = edges
-                    .iter()
-                    .position(|&edge| edge.connected(current))
-                    .unwrap();
-                let next = edges.remove(pos);
-                if let Some(merged) = Edge::merge(current, next) {
-                    current = merged;
-                } else {
-                    new_edges.push(current);
-                    current = next;
+                let mut new_edges = vec![];
+                let first = edges.pop().unwrap();
+                let mut current = first;
+                while let Some(pos) = edges.iter().position(|&edge| edge.connected(current)) {
+                    let next = edges.remove(pos);
+                    if let Some(merged) = Edge::merge(current, next) {
+                        current = merged;
+                    } else {
+                        new_edges.push(current);
+                        current = next;
+                    }
                 }
-            }
-            let mut len = new_edges.len();
-            if Edge::merge(current, first).is_none() {
-                len += 1;
+                len += new_edges.len();
+                if Edge::merge(current, first).is_none() {
+                    len += 1;
+                }
             }
             area * len
         })
