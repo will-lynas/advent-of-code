@@ -9,7 +9,7 @@ use std::{
 
 use super::point::Point;
 
-#[derive(Copy, Clone, Eq, PartialEq, Hash)]
+#[derive(PartialOrd, Ord, Copy, Clone, Eq, PartialEq, Hash)]
 pub struct Edge {
     p1: Point,
     p2: Point,
