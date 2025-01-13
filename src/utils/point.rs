@@ -70,6 +70,10 @@ impl Point {
     pub fn dot(&self, other: Self) -> i32 {
         self.x * other.x + self.y * other.y
     }
+
+    pub fn orthogonal(&self, other: Self) -> bool {
+        self.dot(other) == 0
+    }
 }
 
 impl Debug for Point {
