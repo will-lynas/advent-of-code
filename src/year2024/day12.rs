@@ -45,7 +45,7 @@ fn dfs(
         if grid.contains(adjacent) && grid[adjacent] == plant {
             dfs(grid, adjacent, plant, visited, edges, area);
         } else {
-            edges.insert(Edge::from_points(point, adjacent));
+            edges.insert(Edge::new(point, adjacent).unwrap());
         }
     }
 }
@@ -58,30 +58,5 @@ pub fn part1(input: &Input) -> usize {
 }
 
 pub fn part2(input: &Input) -> usize {
-    input
-        .iter()
-        .map(|(_, area, edges)| {
-            let mut edges: Vec<_> = edges.iter().copied().collect();
-            let mut len = 0;
-            while let Some(mut current) = edges.pop() {
-                let mut new_edges = vec![];
-                while let Some(pos) = edges.iter().position(|&edge| edge.connected(current)) {
-                    let next = edges.remove(pos);
-                    if let Some(merged) = Edge::merge(current, next) {
-                        current = merged;
-                    } else {
-                        new_edges.push(current);
-                        current = next;
-                    }
-                }
-                if let Some(edge) = Edge::merge(current, new_edges[0]) {
-                    new_edges[0] = edge;
-                } else {
-                    new_edges.push(current);
-                }
-                len += new_edges.len();
-            }
-            area * len
-        })
-        .sum()
+    input.iter().map(|(_plant, _area, _edges)| 0).sum()
 }
