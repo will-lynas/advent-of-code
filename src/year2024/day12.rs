@@ -72,10 +72,12 @@ pub fn part2(input: &Input) -> usize {
                         current = next;
                     }
                 }
-                len += new_edges.len();
-                if Edge::merge(current, first).is_none() {
-                    len += 1;
+                if let Some(edge) = Edge::merge(current, first) {
+                    new_edges[0] = edge;
+                } else {
+                    new_edges.push(current);
                 }
+                len += new_edges.len();
             }
             area * len
         })
