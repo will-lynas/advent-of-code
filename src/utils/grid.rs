@@ -78,7 +78,7 @@ impl<T> Grid<T> {
             .collect()
     }
 
-    pub fn adjacent(&self, point: Point) -> Vec<Point> {
+    pub fn orthogonals(&self, point: Point) -> Vec<Point> {
         point
             .orthogonals()
             .into_iter()

@@ -29,7 +29,7 @@ fn score(grid: &Grid<u8>, point: Point) -> usize {
     q.push_back(point);
     while let Some(current) = q.pop_front() {
         let valid_next: Vec<_> = grid
-            .adjacent(current)
+            .orthogonals(current)
             .into_iter()
             .filter(|next| grid[*next] == grid[current] + 1 && !seen.contains(next))
             .collect();
@@ -57,7 +57,7 @@ pub fn part2(grid: &Input) -> usize {
             .filter(|(_, &val)| val == i + b'0')
             .for_each(|(point, _)| {
                 counts[point] += grid
-                    .adjacent(point)
+                    .orthogonals(point)
                     .into_iter()
                     .filter(|&point| grid[point] == i + 1 + b'0')
                     .map(|point| counts[point])
