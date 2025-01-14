@@ -26,7 +26,7 @@ pub const UP_RIGHT: Point = Point::new(1, -1);
 pub const DOWN_RIGHT: Point = Point::new(1, 1);
 pub const DOWN_LEFT: Point = Point::new(-1, 1);
 
-pub const CARDINALS: [Point; 4] = [UP, RIGHT, DOWN, LEFT];
+pub const ORTHOGONALS: [Point; 4] = [UP, RIGHT, DOWN, LEFT];
 pub const DIRS: [Point; 8] = [
     UP, UP_RIGHT, RIGHT, DOWN_RIGHT, DOWN, DOWN_LEFT, LEFT, UP_LEFT,
 ];
@@ -47,7 +47,7 @@ impl Point {
     }
 
     pub fn adjacent(&self) -> Vec<Self> {
-        CARDINALS.iter().map(move |&dir| *self + dir).collect()
+        ORTHOGONALS.iter().map(move |&dir| *self + dir).collect()
     }
 
     #[must_use]
