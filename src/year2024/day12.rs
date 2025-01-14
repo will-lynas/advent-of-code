@@ -45,7 +45,7 @@ fn dfs(
         if grid.contains(adjacent) && grid[adjacent] == plant {
             dfs(grid, adjacent, plant, visited, edges, area);
         } else {
-            edges.push(Edge::new(point, adjacent).unwrap());
+            edges.push(Edge::new(point, adjacent));
         }
     }
 }
