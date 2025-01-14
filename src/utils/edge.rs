@@ -1,10 +1,11 @@
 use std::{
-    fmt,
     fmt::{
+        self,
         Debug,
         Formatter,
     },
     hash::Hash,
+    ops::Add,
 };
 
 use super::point::Point;
@@ -18,6 +19,13 @@ pub struct Edge {
 impl Edge {
     pub fn new(p1: Point, p2: Point) -> Self {
         Self { p1, p2 }
+    }
+}
+
+impl Add<Point> for Edge {
+    type Output = Edge;
+    fn add(self, p: Point) -> Self::Output {
+        Edge::new(self.p1 + p, self.p2 + p)
     }
 }
 
