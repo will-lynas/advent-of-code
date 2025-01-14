@@ -45,7 +45,7 @@ fn dfs(
     }
     visited.insert(point);
     *area += 1;
-    for adjacent in point.adjacent() {
+    for adjacent in point.orthogonals() {
         if grid.contains(adjacent) && grid[adjacent] == plant {
             dfs(grid, adjacent, plant, visited, edges, area);
         } else {

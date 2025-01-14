@@ -80,7 +80,7 @@ impl<T> Grid<T> {
 
     pub fn adjacent(&self, point: Point) -> Vec<Point> {
         point
-            .adjacent()
+            .orthogonals()
             .into_iter()
             .filter(|point| self.contains(*point))
             .collect()

@@ -46,7 +46,7 @@ impl Point {
         (self.x, self.y) = (-self.y, self.x);
     }
 
-    pub fn adjacent(&self) -> Vec<Self> {
+    pub fn orthogonals(&self) -> Vec<Self> {
         ORTHOGONALS.iter().map(move |&dir| *self + dir).collect()
     }
 
