@@ -20,7 +20,12 @@ pub fn parse(input: &str) -> Input {
         .collect()
 }
 
-fn solve([ax, ay, bx, by, gx, gy]: Claw) -> i64 {
+fn solve([ax, ay, bx, by, mut gx, mut gy]: Claw, part2: bool) -> i64 {
+    if part2 {
+        gx += 10_000_000_000_000;
+        gy += 10_000_000_000_000;
+    }
+
     // | ax bx | | ap |   | gx |
     // | ay by | | bp | = | gy |
     //
@@ -46,9 +51,9 @@ fn solve([ax, ay, bx, by, gx, gy]: Claw) -> i64 {
 }
 
 pub fn part1(input: &Input) -> i64 {
-    input.iter().copied().map(solve).sum()
+    input.iter().copied().map(|claw| solve(claw, false)).sum()
 }
 
-pub fn part2(input: &Input) -> usize {
-    input.len()
+pub fn part2(input: &Input) -> i64 {
+    input.iter().copied().map(|claw| solve(claw, true)).sum()
 }
