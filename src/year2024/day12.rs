@@ -7,8 +7,8 @@ use crate::utils::{
     edge::Edge,
     grid::Grid,
     point::{
-        Point,
         DOWN,
+        Point,
         RIGHT,
     },
 };
