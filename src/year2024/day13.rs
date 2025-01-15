@@ -25,28 +25,28 @@ fn solve(&[ax, ay, bx, by, mut gx, mut gy]: &Claw, part2: bool) -> i64 {
         gy += 10_000_000_000_000;
     }
 
-    // | ax bx | | ap |   | gx |
-    // | ay by | | bp | = | gy |
+    // | ax bx | | a |   | gx |
+    // | ay by | | b | = | gy |
     //
-    // | ap |           |  by -bx | | gx |
-    // | bp | = (1/det) | -ay  ax | | gy |
+    // | a |           |  by -bx | | gx |
+    // | b | = (1/det) | -ay  ax | | gy |
 
     let det = ax * by - ay * bx;
     if det == 0 {
         return 0;
     }
 
-    let mut ap = gx * by - gy * bx;
-    let mut bp = gy * ax - gx * ay;
+    let mut a = gx * by - gy * bx;
+    let mut b = gy * ax - gx * ay;
 
-    if ap % det != 0 || bp % det != 0 {
+    if a % det != 0 || b % det != 0 {
         return 0;
     }
 
-    ap /= det;
-    bp /= det;
+    a /= det;
+    b /= det;
 
-    ap * 3 + bp
+    a * 3 + b
 }
 
 pub fn part1(input: &[Claw]) -> i64 {
