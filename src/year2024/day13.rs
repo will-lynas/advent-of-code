@@ -1,43 +1,39 @@
-use crate::utils::{
-    parsing::StringNumberParsing,
-    point::Point,
-};
+use crate::utils::parsing::StringNumberParsing;
 
-type Input = Vec<(Point, Point, Point)>;
-
-fn parse_line(line: &str) -> Point {
-    let nums = line.unsigned_nums();
-    Point::new(nums[0] as i32, nums[1] as i32)
-}
+type Claw = [i64; 6];
+type Input = Vec<Claw>;
 
 pub fn parse(input: &str) -> Input {
     input
         .split("\n\n")
         .map(|block| {
-            let mut lines = block.lines();
-            (
-                parse_line(lines.next().unwrap()),
-                parse_line(lines.next().unwrap()),
-                parse_line(lines.next().unwrap()),
-            )
+            let mut nums = block.signed_nums().into_iter();
+            [
+                nums.next().unwrap(),
+                nums.next().unwrap(),
+                nums.next().unwrap(),
+                nums.next().unwrap(),
+                nums.next().unwrap(),
+                nums.next().unwrap(),
+            ]
         })
         .collect()
 }
 
-fn solve((a, b, goal): (Point, Point, Point)) -> i32 {
-    // | a.x b.x | | ap |   | goal.x |
-    // | a.y b.y | | bp | = | goal.y |
+fn solve([ax, ay, bx, by, gx, gy]: Claw) -> i64 {
+    // | ax bx | | ap |   | gx |
+    // | ay by | | bp | = | gy |
     //
-    // | ap |           | b.y  -b.x | | goal.x |
-    // | bp | = (1/det) | -a.y a.x  | | goal.y |
+    // | ap |           |  by -bx | | gx |
+    // | bp | = (1/det) | -ay  ax | | gy |
 
-    let det = a.x * b.y - a.y * b.x;
+    let det = ax * by - ay * bx;
     if det == 0 {
         return 0;
     }
 
-    let mut ap = goal.x * b.y - goal.y * b.x;
-    let mut bp = goal.y * a.x - goal.x * a.y;
+    let mut ap = gx * by - gy * bx;
+    let mut bp = gy * ax - gx * ay;
 
     if ap % det != 0 || bp % det != 0 {
         return 0;
@@ -49,7 +45,7 @@ fn solve((a, b, goal): (Point, Point, Point)) -> i32 {
     ap * 3 + bp
 }
 
-pub fn part1(input: &Input) -> i32 {
+pub fn part1(input: &Input) -> i64 {
     input.iter().copied().map(solve).sum()
 }
 
