@@ -18,7 +18,7 @@ pub fn parse(input: &str) -> Input {
 
 pub fn part1(grid: &Input) -> usize {
     grid.iter()
-        .filter(|(_, &val)| (val == b'0'))
+        .filter(|&(_, &val)| (val == b'0'))
         .map(|(point, _)| score(grid, point))
         .sum()
 }
@@ -54,7 +54,7 @@ pub fn part2(grid: &Input) -> usize {
 
     for i in (0..=8).rev() {
         grid.iter()
-            .filter(|(_, &val)| val == i + b'0')
+            .filter(|&(_, &val)| val == i + b'0')
             .for_each(|(point, _)| {
                 counts[point] += grid
                     .orthogonals(point)
