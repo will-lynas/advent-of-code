@@ -1,9 +1,8 @@
 use crate::utils::parsing::StringNumberParsing;
 
 type Claw = [i64; 6];
-type Input = Vec<Claw>;
 
-pub fn parse(input: &str) -> Input {
+pub fn parse(input: &str) -> Vec<Claw> {
     input
         .split("\n\n")
         .map(|block| {
@@ -50,10 +49,10 @@ fn solve(&[ax, ay, bx, by, mut gx, mut gy]: &Claw, part2: bool) -> i64 {
     ap * 3 + bp
 }
 
-pub fn part1(input: &Input) -> i64 {
+pub fn part1(input: &[Claw]) -> i64 {
     input.iter().map(|claw| solve(claw, false)).sum()
 }
 
-pub fn part2(input: &Input) -> i64 {
+pub fn part2(input: &[Claw]) -> i64 {
     input.iter().map(|claw| solve(claw, true)).sum()
 }
