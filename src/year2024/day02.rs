@@ -1,16 +1,14 @@
 use itertools::Itertools;
 
-type Lines = Vec<Vec<i32>>;
+use crate::utils::parsing::StringNumberParsing;
+
+type Lines = Vec<Vec<i64>>;
 
 pub fn parse(input: &str) -> Lines {
     input
         .trim()
         .lines()
-        .map(|line| {
-            line.split_whitespace()
-                .map(|s| s.parse().unwrap())
-                .collect()
-        })
+        .map(StringNumberParsing::signed_nums)
         .collect()
 }
 
@@ -31,7 +29,7 @@ pub fn part2(lines: &Lines) -> usize {
         .count()
 }
 
-fn is_safe(nums: &[i32]) -> bool {
+fn is_safe(nums: &[i64]) -> bool {
     let mut nums = nums.iter().tuple_windows().map(|(a, b)| a - b);
     nums.clone().all(|n| (1..=3).contains(&n)) || nums.all(|n| (-3..=-1).contains(&n))
 }
