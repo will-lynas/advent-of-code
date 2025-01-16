@@ -4,7 +4,7 @@ cargo-features = ["edition2024"]
 name = "advent-of-code"
 version = "0.1.0"
 edition = "2024"
-rust-version = "1.83"
+rust-version = "1.85"
 
 [dependencies]
 clap = { version = "4.5.23", features = ["derive"] }
