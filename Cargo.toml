@@ -12,5 +12,4 @@ num = "0.4.3"
 regex = "1.11.1"
 
 [dev-dependencies]
-criterion = "0.5.1"
 indoc = "2.0.5"
