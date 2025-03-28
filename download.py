@@ -13,9 +13,24 @@ assert session_cookie, "SESSION_COOKIE is not set"
 def make_url(year, day):
     return f"https://adventofcode.com/{year}/day/{day}/input"
 
-url = make_url(2024, 7)
+def make_filename(year, day):
+    # day needs to be 2 digits
+    return f"input/year{year}/day{day:02d}.txt"
 
-response = requests.get(url, cookies={"session": session_cookie})
-response.raise_for_status()
+year = 2015
+day = 2
 
-print(response.text)
+for year in range(2015, 2024 + 1):
+    os.makedirs(f"input/year{year}", exist_ok=True)
+
+    for day in range(1, 25 + 1):
+        url = make_url(year, day)
+        filename = make_filename(year, day)
+
+        response = requests.get(url, cookies={"session": session_cookie})
+        response.raise_for_status()
+
+        with open(filename, "w") as f:
+            f.write(response.text)
+
+        print(f"Downloaded {filename}")
